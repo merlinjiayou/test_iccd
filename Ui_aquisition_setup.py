@@ -76,6 +76,18 @@ class Ui_aquisition_setup(object):
         self.doubleSpinBox_exposure_time.setObjectName("doubleSpinBox_exposure_time")
         self.gridLayout_7.addWidget(self.doubleSpinBox_exposure_time, 0, 1, 1, 1)
         self.verticalLayout_13.addLayout(self.gridLayout_7)
+        self.widget_2 = QtWidgets.QWidget(self.groupBox_6)
+        self.widget_2.setObjectName("widget_2")
+        self.horizontalLayout_8 = QtWidgets.QHBoxLayout(self.widget_2)
+        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
+        self.label_35 = QtWidgets.QLabel(self.widget_2)
+        self.label_35.setObjectName("label_35")
+        self.horizontalLayout_8.addWidget(self.label_35)
+        self.spinBox_threshold = QtWidgets.QSpinBox(self.widget_2)
+        self.spinBox_threshold.setMaximum(255)
+        self.spinBox_threshold.setObjectName("spinBox_threshold")
+        self.horizontalLayout_8.addWidget(self.spinBox_threshold)
+        self.verticalLayout_13.addWidget(self.widget_2)
         self.widget_total_frame_count = QtWidgets.QWidget(self.groupBox_6)
         self.widget_total_frame_count.setObjectName("widget_total_frame_count")
         self.verticalLayout_14 = QtWidgets.QVBoxLayout(self.widget_total_frame_count)
@@ -675,7 +687,7 @@ class Ui_aquisition_setup(object):
 
         self.retranslateUi(aquisition_setup)
         self.tabWidget.setCurrentIndex(0)
-        self.tabWidget_output.setCurrentIndex(0)
+        self.tabWidget_output.setCurrentIndex(1)
         self.checkBox_enable_ioc.toggled['bool'].connect(self.widget_IOC.setVisible)
         self.radioButton_burst.toggled['bool'].connect(self.spinBox_burst_count.setEnabled)
         self.checkBox_enable_autosave.toggled['bool'].connect(self.widget.setEnabled)
@@ -752,6 +764,7 @@ class Ui_aquisition_setup(object):
         aquisition_setup.setTabOrder(self.comboBox_delay_c, self.comboBox_width_c)
         self.tabWidget.setWindowTitle("config")
 
+
     def retranslateUi(self, aquisition_setup):
         _translate = QtCore.QCoreApplication.translate
         aquisition_setup.setWindowTitle(_translate("aquisition_setup", "采集设置"))
@@ -766,6 +779,7 @@ class Ui_aquisition_setup(object):
         self.label_3.setText(_translate("aquisition_setup", "读出模式"))
         self.groupBox_6.setTitle(_translate("aquisition_setup", "计时设置"))
         self.label_4.setText(_translate("aquisition_setup", "曝光时间(S)"))
+        self.label_35.setText(_translate("aquisition_setup", "阈值"))
         self.label_15.setText(_translate("aquisition_setup", "帧数"))
         self.groupBox_7.setTitle(_translate("aquisition_setup", "读出设置"))
         self.label_5.setText(_translate("aquisition_setup", "读出速率"))

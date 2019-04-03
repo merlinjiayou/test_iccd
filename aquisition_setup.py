@@ -442,6 +442,10 @@ class aquisition_setup(QWidget, Ui_aquisition_setup):
             self.widget_total_frame_count.hide()
         else:
             self.widget_total_frame_count.show()
+        if p0=="光子计数":
+            self.widget_2.show()
+        else:
+            self.widget_2.hide()
     
     @pyqtSlot(str)
     def on_comboBox_trigger_mode_activated(self, p0):

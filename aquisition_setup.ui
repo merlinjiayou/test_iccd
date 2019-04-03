@@ -154,6 +154,26 @@
              </layout>
             </item>
             <item>
+             <widget class="QWidget" name="widget_2" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_8">
+               <item>
+                <widget class="QLabel" name="label_35">
+                 <property name="text">
+                  <string>阈值</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="spinBox_threshold">
+                 <property name="maximum">
+                  <number>255</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
              <widget class="QWidget" name="widget_total_frame_count" native="true">
               <layout class="QVBoxLayout" name="verticalLayout_14">
                <item>

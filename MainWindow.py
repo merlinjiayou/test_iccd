@@ -340,12 +340,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 try:
                     data = self.ccd.get_data()
                     if self.ccd.get_image_bit() == 8:
-                        self.find_peaks_dll.find_peak_8(ctypes.byref(data), ctypes.byref(self.data_list[num]), height, width,
-                                                        min_value)
+                        self.find_peaks_dll.find_peak_8(ctypes.byref(data), ctypes.byref(self.data_list[num]), height, width,min_value,ctypes.c_int(self.aquisition_widget.spinBox_threshold.value()))
                         self.count_list[num] += 1
                     else:
-                        self.find_peaks_dll.find_peak_16(ctypes.byref(data), ctypes.byref(self.data_list[num]), height, width,
-                                                         min_value)
+                        self.find_peaks_dll.find_peak_16(ctypes.byref(data), ctypes.byref(self.data_list[num]), height, width,min_value,ctypes.c_int(self.aquisition_widget.spinBox_threshold.value()))
                         self.count_list[num] += 1
                 except:
                     pass
