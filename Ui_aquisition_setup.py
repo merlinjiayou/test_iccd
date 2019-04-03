@@ -712,6 +712,7 @@ class Ui_aquisition_setup(object):
         self.tabWidget.windowTitleChanged['QString'].connect(self.widget_total_frame_count.hide)
         self.tabWidget.windowTitleChanged['QString'].connect(self.widget_external_trigger.hide)
         self.tabWidget.windowTitleChanged['QString'].connect(self.widget_IOC.hide)
+        self.tabWidget.windowTitleChanged['QString'].connect(self.widget_2.hide)
         QtCore.QMetaObject.connectSlotsByName(aquisition_setup)
         aquisition_setup.setTabOrder(self.comboBox_measure_mode, self.doubleSpinBox_exposure_time)
         aquisition_setup.setTabOrder(self.doubleSpinBox_exposure_time, self.spinBox_frame_count)
@@ -763,7 +764,6 @@ class Ui_aquisition_setup(object):
         aquisition_setup.setTabOrder(self.doubleSpinBox_delay_b, self.comboBox_delay_c)
         aquisition_setup.setTabOrder(self.comboBox_delay_c, self.comboBox_width_c)
         self.tabWidget.setWindowTitle("config")
-
 
     def retranslateUi(self, aquisition_setup):
         _translate = QtCore.QCoreApplication.translate

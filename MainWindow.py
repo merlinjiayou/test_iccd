@@ -107,7 +107,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def update_message_status(self,text):
         self.statusBar.showMessage(text)
-        print(11111)
 
     def auto_save_function(self):
         if self.aquisition_widget.config["auto_save"]:
