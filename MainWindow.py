@@ -85,7 +85,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.realtime_subwindow = realtime_subwindow()
         self.mdiArea.addSubWindow(self.realtime_subwindow)
-        # self.mdiArea.cascadeSubWindows()
 
         self.init_ui()
         check_connect_status_worker=threading.Thread(target=self.check_connect_status)
@@ -130,15 +129,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     file_number+=1
                 else:break
             if save_path:
-                # try:
+                try:
                     if ".csv" in save_path:
                         np.savetxt(save_path, self.image, fmt="%f", delimiter=",")
                     else:
                         self.image=np.array(self.image,np.int32)
                         # io.imsave(save_path,self.active_image)
                         cv2.imwrite(save_path,self.image)
-                # except:
-                #     pass
+                except:
+                    pass
 
 
     def connect_widget_status(self):
