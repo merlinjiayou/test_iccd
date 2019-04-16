@@ -200,7 +200,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def init_ui(self):
-
         print(self.delayer.connect_status,self.gain_controler.connect_status,self.ccd.connect_status)
         if self.delayer.connect_status and self.gain_controler.connect_status and self.ccd.connect_status:
             self.label_resolution_value.setText(str(self.ccd.get_format()))

@@ -11,8 +11,8 @@ class gain_controler():
         self.power_handle = None
         self.gain_value=0
         self.connect_status=self.connect_device()
-        if self.connect_status:
-            self.set_current_vot(0)
+        # if self.connect_status:
+        #     self.set_current_vot(0)
 
 
     def connect_device(self):
