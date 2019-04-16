@@ -273,6 +273,7 @@ class graph_widget(QtGui.QWidget):
             pass
 
 
+
     def mouseMoved(self,evt):
         pos = evt[0]  ## using signal proxy turns original arguments into a tuple
         if self.p1.sceneBoundingRect().contains(pos):
