@@ -94,6 +94,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
 
+
     def check_connect_status(self):
         while True:
             if self.ccd.cam.DeviceValid:
@@ -200,20 +201,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def init_ui(self):
-
+        self.aquisition_widget.tabWidget.setWindowTitle("config")
         print(self.delayer.connect_status,self.gain_controler.connect_status,self.ccd.connect_status)
         if self.delayer.connect_status and self.gain_controler.connect_status and self.ccd.connect_status:
             self.label_resolution_value.setText(str(self.ccd.get_format()))
             self.doubleSpinBox_frame_value.setValue(self.ccd.get_frame_rate())
             self.label_connect_value.setStyleSheet("background-color: rgb(0, 255, 0);")
         else:
-            self.toolButton_realtime.setDisabled(True)
-            self.toolButton_take_signal.setDisabled(True)
-            self.toolButton_stop.setDisabled(True)
-            self.action_aquisition_setup.setDisabled(True)
-            self.action_synch.setDisabled(True)
-            self.aquisition_widget.setDisabled(True)
-            self.synch_widget.setDisabled(True)
+            # self.toolButton_realtime.setDisabled(True)
+            # self.toolButton_take_signal.setDisabled(True)
+            # self.toolButton_stop.setDisabled(True)
+            # self.action_aquisition_setup.setDisabled(True)
+            # self.action_synch.setDisabled(True)
+            # self.aquisition_widget.setDisabled(True)
+            # self.synch_widget.setDisabled(True)
             self.label_connect_value.setStyleSheet("background-color: rgb(255, 0, 0);")
             if self.war_times==0:
                 self.war_times+=1
@@ -348,6 +349,80 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             else:
                 time.sleep(0.01)
 
+    def sequence(self):
+        self.lock.acquire()
+        self.delayer.channel_enable("D", "ON")
+        for i in range(self.aquisition_widget.spinBox_measure_count.value()):
+            if self.toolButton_stop.isChecked():
+                break
+            self.set_sequence_parameter()
+            data=self.get_sequence_data()
+            self.add_sequence_data(data)
+        self.aquisition_widget.recovery_parameter()
+        self.delayer.channel_enable("D", "OFF")
+        self.lock.release()
+
+
+    def get_sequence_data(self):
+        if self.aquisition_widget.comboBox_measure_mode.currentText()=="单次":
+            if self.ccd.cam.LiveVideoRunning:
+                self.image = np.array(self.ccd.get_data())
+                self.plot_active_subwindow_signal.emit()
+        elif self.aquisition_widget.comboBox_measure_mode.currentText()=="累加":
+            if self.ccd.cam.LiveVideoRunning:
+                worker_list = []
+                self.count_list.clear()
+                self.data_list.clear()
+
+                display_worker = threading.Thread(target=self.display_data)
+                display_worker.setDaemon(True)
+                display_worker.start()
+
+                total_count = self.aquisition_widget.spinBox_frame_count.value()
+                for i in range(5):
+                    count = total_count // (5 - i)
+                    total_count = total_count - count
+                    self.count_list.append(0)
+                    self.data_list.append((ctypes.c_uint32 * self.ccd.cam.ImageWidth * self.ccd.cam.ImageHeight)())
+                    worker = threading.Thread(target=self.accumulation_worker, args=(i, count))
+                    worker.setDaemon(True)
+                    worker_list.append(worker)
+                    worker.start()
+                for worker in worker_list:
+                    worker.join()
+        elif self.aquisition_widget.comboBox_measure_mode.currentText()=="光子计数":
+            if self.ccd.cam.LiveVideoRunning:
+                worker_list = []
+                self.count_list.clear()
+                self.data_list.clear()
+
+                display_worker = threading.Thread(target=self.display_data)
+                display_worker.setDaemon(True)
+                display_worker.start()
+
+                total_count = self.aquisition_widget.spinBox_frame_count.value()
+                for i in range(5):
+                    count = total_count // (5 - i)
+                    total_count = total_count - count
+                    self.count_list.append(0)
+                    self.data_list.append((ctypes.c_uint16 * self.ccd.cam.ImageWidth * self.ccd.cam.ImageHeight)())
+                    worker = threading.Thread(target=self.spc_worker, args=(i, count))
+                    worker.setDaemon(True)
+                    worker_list.append(worker)
+                    worker.start()
+                for worker in worker_list:
+                    worker.join()
+        return self.image
+
+
+
+
+
+
+
+    def add_sequence_data(self):
+        pass
+
 
     def display_data(self):
         while self.toolButton_take_signal.isChecked():
@@ -357,7 +432,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     total_count+=count
                 value=round(total_count / self.aquisition_widget.config["frame_count"]*100)
                 self.update_progressbar_signal.emit(value)
-            # print(total_count,self.aquisition_widget.config["frame_count"])
             if total_count>=self.aquisition_widget.config["frame_count"] or (not self.toolButton_take_signal.isChecked()):
                 print("总计",total_count)
                 self.update_buttom_signal.emit()
@@ -446,6 +520,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     @pyqtSlot()
     def on_action_aquisition_setup_triggered(self):
+        self.aquisition_widget.resize(self.aquisition_widget.minimumSizeHint())
         self.aquisition_widget.show()
 
 

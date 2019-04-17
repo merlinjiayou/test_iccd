@@ -20,6 +20,7 @@ class aquisition_setup(QWidget, Ui_aquisition_setup):
     update_init_signal=pyqtSignal()
     update_message_signal=pyqtSignal(str)
     update_frame_rates_signal=pyqtSignal()
+    update_current_autoparameter=pyqtSignal(float,float)
 
     def __init__(self, parent=None,delayer=None,gain_controler=None,ccd=None):
 
@@ -27,6 +28,7 @@ class aquisition_setup(QWidget, Ui_aquisition_setup):
         self.setupUi(self)
         self.update_init_signal.connect(self.init_ui)
         self.update_frame_rates_signal.connect(self.update_frame_rates)
+        self.update_current_autoparameter.connect(self.display_current_autoparameter)
         self.delayer=delayer
         self.gain_controler=gain_controler
         self.ccd=ccd
@@ -556,3 +558,71 @@ class aquisition_setup(QWidget, Ui_aquisition_setup):
     @pyqtSlot()
     def on_doubleSpinBox_divisor_editingFinished(self):
         self.delayer.divisor_set(self.doubleSpinBox_divisor.value())
+
+    def set_sequence_parameter(self,value):
+        if self.radioButton_autodelay_enable_linear.isChecked():
+            delay_value=self.doubleSpinBox_autodelay_linear_s.value()+self.doubleSpinBox_autodelay_linear_k.value()*(value+self.doubleSpinBox_autodelay_linear_b.value())
+        elif self.radioButton_autodelay_enable_index.isChecked():
+            delay_value=self.doubleSpinBox_autodelay_index_s.value()+self.doubleSpinBox_autodelay_index_a.value()**(self.doubleSpinBox_autodelay_index_k.value()*(value+self.doubleSpinBox_autodelay_index_b.value() ))
+        elif self.radioButton_autodelay_enable_logarithm.isChecked():
+            import math
+            delay_value=self.doubleSpinBox_autodelay_log_s.value()+math.log(self.doubleSpinBox_autodelay_log_k.value()*(value+self.doubleSpinBox_autodelay_log_b.value()),self.doubleSpinBox_autodelay_log_a.value())
+
+        if self.radioButton_autowidth_enable_linear.isChecked():
+            width=self.doubleSpinBox_autowidth_linear_s.value()+self.doubleSpinBox_autowidth_linear_k.value()*(value+self.doubleSpinBox_autowidth_linear_b.value())
+        elif self.radioButton_autowidth_enable_index.isChecked():
+            width=self.doubleSpinBox_autowidth_index_s.value()+self.doubleSpinBox_autowidth_index_a.value()**(self.doubleSpinBox_autowidth_index_k.value()*(self.doubleSpinBox_autowidth_index_b.value()+value))
+        elif self.radioButton_autowidth_enable_logarithm.isChecked():
+            import math
+            width=self.doubleSpinBox_autowidth_log_s.value()+math.log(self.doubleSpinBox_autowidth_log_k.value()*(value+self.doubleSpinBox_autowidth_log_b.value()),self.doubleSpinBox_autowidth_log_a.value())
+
+        if self.checkBox_autodelay_enable_gate.isChecked():
+            self.delayer.set_channel(channel="D",delay="%.2fn"%delay_value)
+        if self.checkBox_autodelay_enable_a.isChecked():
+            self.delayer.set_channel(channel="A", delay="%.2fn" % delay_value)
+        if self.checkBox_autodelay_enable_b.isChecked():
+            self.delayer.set_channel(channel="B", delay="%.2fn" % delay_value)
+        if self.checkBox_autodelay_enable_c.isChecked():
+            self.delayer.set_channel(channel="C", delay="%.2fn" % delay_value)
+
+        if self.checkBox_autowidth_enable_gate.isChecked():
+            self.delayer.set_channel("D",width="%.2fn"%width)
+        if self.checkBox_autowidth_enable_a.isChecked():
+            self.delayer.set_channel("A", width="%.2fn" % width)
+        if self.checkBox_autowidth_enable_b.isChecked():
+            self.delayer.set_channel("B", width="%.2fn" % width)
+        if self.checkBox_autowidth_enable_c.isChecked():
+            self.delayer.set_channel("C", width="%.2fn" % width)
+        self.update_current_autoparameter.emit(delay_value,width)
+
+
+    def display_current_autoparameter(self,delay=0,width=0):
+        """更新界面自动延时及脉宽参数值"""
+        if self.checkBox_autodelay_enable_gate.isChecked() or self.checkBox_autodelay_enable_a.isChecked() or self.checkBox_autodelay_enable_b.isChecked() or self.checkBox_autodelay_enable_c.isChecked():
+            if self.radioButton_autodelay_enable_linear.isChecked():
+                self.doubleSpinBox_autodelay_linear_y.setValue(delay)
+            if self.radioButton_autodelay_enable_index.isChecked():
+                self.doubleSpinBox_autodelay_index_y.setValue(delay)
+            if self.radioButton_autodelay_enable_logarithm.isChecked():
+                self.doubleSpinBox_autodelay_log_y.setValue(delay)
+        if self.checkBox_autowidth_enable_gate.isChecked() or self.checkBox_autowidth_enable_a.isChecked() or self.checkBox_autowidth_enable_b.isChecked() or self.checkBox_autowidth_enable_c.isChecked():
+            if self.radioButton_autowidth_enable_linear.isChecked():
+                self.doubleSpinBox_autowidth_linear_y.setValue(width)
+            if self.radioButton_autowidth_enable_index.isChecked():
+                self.doubleSpinBox_autowidth_index_y.setValue(width)
+            if self.radioButton_autowidth_enable_logarithm.isChecked():
+                self.doubleSpinBox_autowidth_log_y.setValue(width)
+
+    def recovery_parameter(self):
+        """恢复界面延时及脉宽参数值"""
+        self.delayer.set_channel(channel="A",delay=self.doubleSpinBox_delay_a.text()+self.comboBox_delay_a.currentText()[0],width=self.doubleSpinBox_width_a.text()+self.comboBox_width_a.currentText()[0])
+        self.delayer.set_channel(channel="B",delay=self.doubleSpinBox_delay_b.text()+self.comboBox_delay_b.currentText()[0],width=self.doubleSpinBox_width_b.text()+self.comboBox_width_b.currentText()[0])
+        self.delayer.set_channel(channel="C",delayer=self.doubleSpinBox_delay_c.text()+self.comboBox_delay_c.currentText()[0],width=self.doubleSpinBox_width_c.text()+self.comboBox_width_c.currentText()[0])
+        self.delayer.set_channel(channel="D",delayer=self.doubleSpinBox_delay_d.text()+self.comboBox_delay_d.currentText()[0],width=self.doubleSpinBox_width_d.text()+self.comboBox_width_d.currentText()[0])
+
+
+
+
+
+
+

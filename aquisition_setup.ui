@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>613</width>
-    <height>327</height>
+    <width>666</width>
+    <height>583</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -137,6 +137,9 @@
               </item>
               <item row="0" column="1">
                <widget class="QDoubleSpinBox" name="doubleSpinBox_exposure_time">
+                <property name="toolTip">
+                 <string>CCD曝光时间</string>
+                </property>
                 <property name="decimals">
                  <number>5</number>
                 </property>
@@ -165,6 +168,9 @@
                </item>
                <item>
                 <widget class="QSpinBox" name="spinBox_threshold">
+                 <property name="toolTip">
+                  <string>光子识别阈值</string>
+                 </property>
                  <property name="maximum">
                   <number>255</number>
                  </property>
@@ -187,6 +193,9 @@
                  </item>
                  <item row="0" column="1">
                   <widget class="QSpinBox" name="spinBox_frame_count">
+                   <property name="toolTip">
+                    <string>累加帧数</string>
+                   </property>
                    <property name="minimum">
                     <number>1</number>
                    </property>
@@ -235,7 +244,11 @@
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QComboBox" name="comboBox_frame_rate"/>
+               <widget class="QComboBox" name="comboBox_frame_rate">
+                <property name="toolTip">
+                 <string>相机帧速</string>
+                </property>
+               </widget>
               </item>
               <item row="1" column="0">
                <widget class="QLabel" name="label_6">
@@ -246,6 +259,9 @@
               </item>
               <item row="1" column="1">
                <widget class="QDoubleSpinBox" name="doubleSpinBox_pre_gain">
+                <property name="toolTip">
+                 <string>CCD电子增益</string>
+                </property>
                 <property name="maximum">
                  <double>48.000000000000000</double>
                 </property>
@@ -289,6 +305,9 @@
                  </item>
                  <item>
                   <widget class="QDoubleSpinBox" name="doubleSpinBox_internal_trigger_rate">
+                   <property name="toolTip">
+                    <string>若需一次CCD曝光多次打开快门请开启门控设置中的片上积分功能，默认一次曝光接受一次触发</string>
+                   </property>
                    <property name="buttonSymbols">
                     <enum>QAbstractSpinBox::NoButtons</enum>
                    </property>
@@ -395,6 +414,9 @@
                  </item>
                  <item row="0" column="1">
                   <widget class="QDoubleSpinBox" name="doubleSpinBox_divisor">
+                   <property name="toolTip">
+                    <string>若需一次CCD曝光多次打开快门请开启门控设置中的片上积分功能，默认一次曝光接受一次触发</string>
+                   </property>
                    <property name="maximum">
                     <double>1000000000.000000000000000</double>
                    </property>
@@ -483,6 +505,9 @@
            <layout class="QVBoxLayout" name="verticalLayout_7">
             <item>
              <widget class="QCheckBox" name="checkBox_enable_ioc">
+              <property name="toolTip">
+               <string>CCD一次曝光接受多次触发</string>
+              </property>
               <property name="text">
                <string>开启</string>
               </property>
@@ -493,6 +518,9 @@
               <layout class="QVBoxLayout" name="verticalLayout_8">
                <item>
                 <widget class="QRadioButton" name="radioButton_fit_ccd">
+                 <property name="toolTip">
+                  <string>CCD曝光期间接受所有触发</string>
+                 </property>
                  <property name="text">
                   <string>适配CCD</string>
                  </property>
@@ -500,6 +528,9 @@
                </item>
                <item>
                 <widget class="QRadioButton" name="radioButton_burst">
+                 <property name="toolTip">
+                  <string>CCD一次曝光最多接受n次触发</string>
+                 </property>
                  <property name="text">
                   <string>Burst</string>
                  </property>
@@ -882,6 +913,9 @@
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
+                <property name="toolTip">
+                 <string>通道延时及脉宽将与门控一致</string>
+                </property>
                 <property name="text">
                  <string>与门控一致</string>
                 </property>
@@ -1069,6 +1103,9 @@
                <widget class="QCheckBox" name="checkBox_same_to_gate_b">
                 <property name="enabled">
                  <bool>false</bool>
+                </property>
+                <property name="toolTip">
+                 <string>通道延时及脉宽将与门控一致</string>
                 </property>
                 <property name="text">
                  <string>与门控一致</string>
@@ -1258,6 +1295,9 @@
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
+                <property name="toolTip">
+                 <string>通道延时及脉宽将与门控一致</string>
+                </property>
                 <property name="text">
                  <string>与门控一致</string>
                 </property>
@@ -1282,6 +1322,815 @@
           </item>
          </layout>
         </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_9">
+      <attribute name="title">
+       <string>时间序列</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_24">
+       <item>
+        <layout class="QGridLayout" name="gridLayout_13">
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="checkBox_enable_sequence">
+           <property name="text">
+            <string>启用</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <layout class="QGridLayout" name="gridLayout_14">
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="spinBox_measure_count">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>1000</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_39">
+             <property name="text">
+              <string>测量次数N</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_30">
+         <item>
+          <widget class="QGroupBox" name="groupBox_9">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="title">
+            <string>延时</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_21">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_17">
+              <item>
+               <widget class="QCheckBox" name="checkBox_autodelay_enable_gate">
+                <property name="text">
+                 <string>门控</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_autodelay_enable_a">
+                <property name="text">
+                 <string>A</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_autodelay_enable_b">
+                <property name="text">
+                 <string>B</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_autodelay_enable_c">
+                <property name="text">
+                 <string>C</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_20">
+              <item>
+               <widget class="QRadioButton" name="radioButton_autodelay_enable_linear">
+                <property name="text">
+                 <string>线性</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButton_autodelay_enable_index">
+                <property name="text">
+                 <string>指数</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButton_autodelay_enable_logarithm">
+                <property name="text">
+                 <string>对数</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget_4" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_19">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_11">
+                 <item>
+                  <widget class="QLabel" name="label_38">
+                   <property name="text">
+                    <string>延时</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_linear_y">
+                   <property name="toolTip">
+                    <string>第n次延时</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_40">
+                   <property name="text">
+                    <string>=</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_linear_s">
+                   <property name="toolTip">
+                    <string>起始值</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_41">
+                   <property name="text">
+                    <string>+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_linear_k">
+                   <property name="toolTip">
+                    <string>增量</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_42">
+                   <property name="text">
+                    <string>* (n+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_linear_b">
+                   <property name="toolTip">
+                    <string>增量</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_63">
+                   <property name="text">
+                    <string>)</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget_6" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_23">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_13">
+                 <item>
+                  <widget class="QLabel" name="label_47">
+                   <property name="text">
+                    <string>延时</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_index_y">
+                   <property name="toolTip">
+                    <string>第n次延时</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_48">
+                   <property name="text">
+                    <string>=</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_index_s">
+                   <property name="toolTip">
+                    <string>起始值</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_49">
+                   <property name="text">
+                    <string>+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_index_a">
+                   <property name="toolTip">
+                    <string>底</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_65">
+                   <property name="text">
+                    <string>**(</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_index_k">
+                   <property name="toolTip">
+                    <string>底</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_66">
+                   <property name="text">
+                    <string>*</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_50">
+                   <property name="text">
+                    <string>(n+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_index_b">
+                   <property name="toolTip">
+                    <string>底</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_64">
+                   <property name="text">
+                    <string>))</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget_8" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_25">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_14">
+                 <item>
+                  <widget class="QLabel" name="label_51">
+                   <property name="text">
+                    <string>延时</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_log_y">
+                   <property name="toolTip">
+                    <string>第n次延时</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_52">
+                   <property name="text">
+                    <string>=</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_log_s">
+                   <property name="toolTip">
+                    <string>起始值</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_53">
+                   <property name="text">
+                    <string>+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_36">
+                   <property name="text">
+                    <string>log</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_log_a">
+                   <property name="toolTip">
+                    <string>底</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_54">
+                   <property name="text">
+                    <string>(</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_log_k">
+                   <property name="toolTip">
+                    <string>底</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_67">
+                   <property name="text">
+                    <string>*(n+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autodelay_log_b">
+                   <property name="toolTip">
+                    <string>底</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_68">
+                   <property name="text">
+                    <string>))</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_10">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="title">
+            <string>脉宽</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_22">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_18">
+              <item>
+               <widget class="QCheckBox" name="checkBox_autowidth_enable_gate">
+                <property name="text">
+                 <string>门控</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_autowidth_enable_a">
+                <property name="text">
+                 <string>A</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_autowidth_enable_b">
+                <property name="text">
+                 <string>B</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_autowidth_enable_c">
+                <property name="text">
+                 <string>C</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <widget class="QRadioButton" name="radioButton_autowidth_enable_linear">
+                <property name="text">
+                 <string>线性</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButton_autowidth_enable_index">
+                <property name="text">
+                 <string>指数</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButton_autowidth_enable_logarithm">
+                <property name="text">
+                 <string>对数</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget_9" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_26">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_12">
+                 <item>
+                  <widget class="QLabel" name="label_43">
+                   <property name="text">
+                    <string>脉宽</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_linear_y">
+                   <property name="toolTip">
+                    <string>第n次脉宽</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_44">
+                   <property name="text">
+                    <string>=</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_linear_s">
+                   <property name="toolTip">
+                    <string>起始脉宽</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_45">
+                   <property name="text">
+                    <string>+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_linear_k">
+                   <property name="toolTip">
+                    <string>增量</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_46">
+                   <property name="text">
+                    <string>* (n+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_linear_b">
+                   <property name="toolTip">
+                    <string>增量</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_69">
+                   <property name="text">
+                    <string>)</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget_10" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_27">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_16">
+                 <item>
+                  <widget class="QLabel" name="label_59">
+                   <property name="text">
+                    <string>脉宽</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_index_y">
+                   <property name="toolTip">
+                    <string>第n次脉宽</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_60">
+                   <property name="text">
+                    <string>=</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_index_s">
+                   <property name="toolTip">
+                    <string>起始脉宽</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_61">
+                   <property name="text">
+                    <string>+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_index_a">
+                   <property name="toolTip">
+                    <string>底</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_72">
+                   <property name="text">
+                    <string>**(</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_index_k">
+                   <property name="toolTip">
+                    <string>底</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_71">
+                   <property name="text">
+                    <string>*</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_62">
+                   <property name="text">
+                    <string>(n+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_index_b">
+                   <property name="toolTip">
+                    <string>底</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_70">
+                   <property name="text">
+                    <string>))</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget_11" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_28">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_15">
+                 <item>
+                  <widget class="QLabel" name="label_55">
+                   <property name="text">
+                    <string>脉宽</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_log_y">
+                   <property name="toolTip">
+                    <string>第n次脉宽</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_56">
+                   <property name="text">
+                    <string>=</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_log_s">
+                   <property name="toolTip">
+                    <string>起始脉宽</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_57">
+                   <property name="text">
+                    <string>+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_37">
+                   <property name="text">
+                    <string>log</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_log_a">
+                   <property name="toolTip">
+                    <string>底</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_58">
+                   <property name="text">
+                    <string>(</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_log_k">
+                   <property name="toolTip">
+                    <string>底</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_74">
+                   <property name="text">
+                    <string>*(n+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_autowidth_log_b">
+                   <property name="toolTip">
+                    <string>底</string>
+                   </property>
+                   <property name="maximum">
+                    <double>1000000000.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_73">
+                   <property name="text">
+                    <string>))</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_11">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -1777,12 +2626,12 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>119</x>
-     <y>71</y>
+     <x>141</x>
+     <y>150</y>
     </hint>
     <hint type="destinationlabel">
-     <x>119</x>
-     <y>71</y>
+     <x>141</x>
+     <y>219</y>
     </hint>
    </hints>
   </connection>
@@ -1793,12 +2642,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>119</x>
-     <y>71</y>
+     <x>150</x>
+     <y>209</y>
     </hint>
     <hint type="destinationlabel">
-     <x>119</x>
-     <y>71</y>
+     <x>114</x>
+     <y>237</y>
     </hint>
    </hints>
   </connection>
@@ -1809,12 +2658,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>101</x>
-     <y>41</y>
+     <x>112</x>
+     <y>60</y>
     </hint>
     <hint type="destinationlabel">
-     <x>101</x>
-     <y>47</y>
+     <x>112</x>
+     <y>99</y>
     </hint>
    </hints>
   </connection>
@@ -1825,12 +2674,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>345</x>
+     <y>118</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>465</x>
+     <y>146</y>
     </hint>
    </hints>
   </connection>
@@ -1841,12 +2690,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>345</x>
+     <y>118</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>465</x>
+     <y>173</y>
     </hint>
    </hints>
   </connection>
@@ -1857,12 +2706,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>345</x>
+     <y>118</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>465</x>
+     <y>200</y>
     </hint>
    </hints>
   </connection>
@@ -1873,12 +2722,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>345</x>
+     <y>118</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>566</x>
+     <y>146</y>
     </hint>
    </hints>
   </connection>
@@ -1889,12 +2738,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>345</x>
+     <y>118</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>566</x>
+     <y>173</y>
     </hint>
    </hints>
   </connection>
@@ -1905,12 +2754,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>345</x>
+     <y>118</y>
     </hint>
     <hint type="destinationlabel">
-     <x>154</x>
-     <y>60</y>
+     <x>345</x>
+     <y>226</y>
     </hint>
    </hints>
   </connection>
@@ -1921,12 +2770,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>305</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -1937,12 +2786,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>154</x>
-     <y>60</y>
+     <x>334</x>
+     <y>109</y>
     </hint>
    </hints>
   </connection>
@@ -1953,12 +2802,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>305</x>
+     <y>108</y>
     </hint>
    </hints>
   </connection>
@@ -1969,12 +2818,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>305</x>
+     <y>110</y>
     </hint>
    </hints>
   </connection>
@@ -1985,12 +2834,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>333</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -2001,12 +2850,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>333</x>
+     <y>108</y>
     </hint>
    </hints>
   </connection>
@@ -2017,12 +2866,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>154</x>
-     <y>60</y>
+     <x>334</x>
+     <y>109</y>
     </hint>
    </hints>
   </connection>
@@ -2033,12 +2882,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>305</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -2049,12 +2898,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>305</x>
+     <y>108</y>
     </hint>
    </hints>
   </connection>
@@ -2065,12 +2914,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>305</x>
+     <y>110</y>
     </hint>
    </hints>
   </connection>
@@ -2081,12 +2930,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>333</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -2097,12 +2946,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>50</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>172</x>
-     <y>85</y>
+     <x>333</x>
+     <y>108</y>
     </hint>
    </hints>
   </connection>
@@ -2133,8 +2982,8 @@
      <y>13</y>
     </hint>
     <hint type="destinationlabel">
-     <x>433</x>
-     <y>171</y>
+     <x>434</x>
+     <y>286</y>
     </hint>
    </hints>
   </connection>
@@ -2149,8 +2998,8 @@
      <y>19</y>
     </hint>
     <hint type="destinationlabel">
-     <x>119</x>
-     <y>71</y>
+     <x>141</x>
+     <y>219</y>
     </hint>
    </hints>
   </connection>
@@ -2167,6 +3016,230 @@
     <hint type="destinationlabel">
      <x>103</x>
      <y>154</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_autodelay_enable_linear</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widget_4</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>170</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>62</x>
+     <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_autodelay_enable_index</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widget_6</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>374</x>
+     <y>170</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>165</x>
+     <y>265</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_autodelay_enable_logarithm</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widget_8</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>621</x>
+     <y>170</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>234</x>
+     <y>311</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_autowidth_enable_linear</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widget_9</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>224</x>
+     <y>400</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>448</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_autowidth_enable_index</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widget_10</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>422</x>
+     <y>400</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>474</x>
+     <y>495</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_autowidth_enable_logarithm</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widget_11</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>621</x>
+     <y>400</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>564</x>
+     <y>542</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_enable_sequence</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>spinBox_measure_count</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>336</x>
+     <y>83</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_enable_sequence</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>groupBox_9</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>73</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>75</x>
+     <y>108</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_enable_sequence</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>groupBox_10</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>106</x>
+     <y>54</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>351</x>
+     <y>419</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>windowTitleChanged(QString)</signal>
+   <receiver>widget_6</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>401</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>131</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>windowTitleChanged(QString)</signal>
+   <receiver>widget_10</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>441</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>456</x>
+     <y>495</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>windowTitleChanged(QString)</signal>
+   <receiver>widget_11</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>485</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>510</x>
+     <y>542</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>windowTitleChanged(QString)</signal>
+   <receiver>widget_8</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>196</x>
+     <y>13</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>187</x>
+     <y>310</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>windowTitleChanged(QString)</signal>
+   <receiver>widget_6</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>173</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>192</x>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
