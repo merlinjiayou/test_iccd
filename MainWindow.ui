@@ -253,6 +253,8 @@
     </property>
     <addaction name="action_save"/>
     <addaction name="action_open"/>
+    <addaction name="action_open_sequence_file"/>
+    <addaction name="action_save_sequence_file"/>
     <addaction name="action_exit"/>
    </widget>
    <widget class="QMenu" name="menu_2">
@@ -431,6 +433,24 @@
    </property>
    <property name="text">
     <string>子窗口模式</string>
+   </property>
+  </action>
+  <action name="action_open_sequence_file">
+   <property name="icon">
+    <iconset resource="source.qrc">
+     <normaloff>:/ico/ico_file/1072492.png</normaloff>:/ico/ico_file/1072492.png</iconset>
+   </property>
+   <property name="text">
+    <string>打开序列</string>
+   </property>
+  </action>
+  <action name="action_save_sequence_file">
+   <property name="icon">
+    <iconset resource="source.qrc">
+     <normaloff>:/ico/ico_file/1072697.png</normaloff>:/ico/ico_file/1072697.png</iconset>
+   </property>
+   <property name="text">
+    <string>保存序列</string>
    </property>
   </action>
  </widget>

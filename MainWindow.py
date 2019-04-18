@@ -54,6 +54,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     show_message_box_signal=pyqtSignal(str)
     update_realtime_subwindow_signal=pyqtSignal()
     update_connect_status_signal=pyqtSignal()
+    add_sequence_data_signal=pyqtSignal()
 
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
@@ -66,6 +67,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.show_message_box_signal.connect(self.show_message_box)
         self.update_realtime_subwindow_signal.connect(self.update_realtime_subwindow)
         self.update_connect_status_signal.connect(self.init_ui)
+        self.add_sequence_data_signal.connect(self.add_sequence_data)
 
         self.lock=threading.Lock()
         self.war_times = 0
@@ -356,8 +358,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if self.toolButton_stop.isChecked():
                 break
             self.set_sequence_parameter()
-            data=self.get_sequence_data()
-            self.add_sequence_data(data)
+            self.get_sequence_data()
+            self.add_sequence_data_signal.emit()
         self.aquisition_widget.recovery_parameter()
         self.delayer.channel_enable("D", "OFF")
         self.lock.release()
@@ -415,13 +417,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return self.image
 
 
-
-
-
-
-
     def add_sequence_data(self):
-        pass
+        self.active_subwindow.graph_widget.add_image_3D(self.image)
+
 
 
     def display_data(self):
@@ -451,7 +449,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def update_active_subwindow(self):
-        self.active_subwindow.graph_widget.plot(self.image)
+        self.active_subwindow.graph_widget.plot_image(self.image)
 
     def update_realtime_subwindow(self):
         self.realtime_subwindow.graph_widget.plot(self.realtime_image)
@@ -536,7 +534,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.file_path["save"] = os.path.split(filepath)[0]
             active_subwindow = self.mdiArea.activeSubWindow()
             if "图像" in active_subwindow.windowTitle():
-                data = active_subwindow.graph_widget.data
+                data = active_subwindow.graph_widget.image_data
                 data = np.array(data, np.int32)
                 if ".csv" in filepath:
                     np.savetxt(filepath, data, fmt="%f", delimiter=",")
@@ -567,7 +565,54 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.add_subwindow_signal.emit()
                 self.plot_active_subwindow_signal.emit()
             except:
-                pass
+                self.show_message_box_signal.emit("文件格式错误")
+
+    @pyqtSlot()
+    def on_action_open_sequence_file_triggered(self):
+        worker=threading.Thread(target=self.open_sequence_file_worker)
+        worker.setDaemon(True)
+        worker.start()
+
+    def open_sequence_file_worker(self):
+        file_path_list,_=QtWidgets.QFileDialog.getOpenFileNames(self,"打开序列文件",self.file_path["open"],"file type(*.tiff);;file type(*.png);;file type(*.jpg);;file type(*.csv)")
+        if file_path_list:
+            file_path_list=[]
+            file_path_list.sort()
+            self.add_subwindow_signal.emit()
+            for file_path in file_path_list:
+                try:
+                    self.file_path["open"] = os.path.split(file_path)[0]
+                    if ".csv" in file_path:
+                        self.image = np.loadtxt(file_path, delimiter=",")
+                    else:
+                        self.image = cv2.imread(file_path, 0)
+                    self.image = self.image[::-1]
+                    self.add_sequence_data_signal.emit()
+                except:
+                    self.show_message_box_signal.emit("文件格式错误")
+
+
+
+    @pyqtSlot()
+    def on_action_save_sequence_file_triggered(self):
+        file_path,_=QtWidgets.QFileDialog.getSaveFileName(self,"保存序列文件",self.file_path["save"],"file type(*.tiff);;file type(*.png);;file type(*.jpg);;file type(*.csv)")
+        if file_path:
+            self.file_path["save"] = os.path.split(file_path)[0]
+            file_name_full=os.path.split(file_path)[0]
+            file_name=os.path.splitext(file_name_full)[0]
+            file_exp=os.path.splitext(file_name_full)[1]
+            active_subwindow = self.mdiArea.activeSubWindow()
+            if "图像" in active_subwindow.windowTitle():
+                for num,data in enumerate(active_subwindow.graph_widget.image_list):
+                    try:
+                        save_file_path=os.path.join(self.file_path["save"],file_name+"_%d"%num+file_exp)
+                        data = np.array(data, np.int32)
+                        if ".csv" in save_file_path:
+                            np.savetxt(save_file_path, data, fmt="%f", delimiter=",")
+                        else:
+                            cv2.imwrite(save_file_path, data)
+                    except:
+                        self.show_message_box_signal.emit("数据错误")
 
     
     @pyqtSlot()

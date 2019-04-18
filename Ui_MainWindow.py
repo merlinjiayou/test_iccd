@@ -185,8 +185,20 @@ class Ui_MainWindow(object):
         icon12.addPixmap(QtGui.QPixmap(":/ico/ico_file/1131551.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action_subwindow.setIcon(icon12)
         self.action_subwindow.setObjectName("action_subwindow")
+        self.action_open_sequence_file = QtWidgets.QAction(MainWindow)
+        icon13 = QtGui.QIcon()
+        icon13.addPixmap(QtGui.QPixmap(":/ico/ico_file/1072492.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_open_sequence_file.setIcon(icon13)
+        self.action_open_sequence_file.setObjectName("action_open_sequence_file")
+        self.action_save_sequence_file = QtWidgets.QAction(MainWindow)
+        icon14 = QtGui.QIcon()
+        icon14.addPixmap(QtGui.QPixmap(":/ico/ico_file/1072697.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_save_sequence_file.setIcon(icon14)
+        self.action_save_sequence_file.setObjectName("action_save_sequence_file")
         self.menu.addAction(self.action_save)
         self.menu.addAction(self.action_open)
+        self.menu.addAction(self.action_open_sequence_file)
+        self.menu.addAction(self.action_save_sequence_file)
         self.menu.addAction(self.action_exit)
         self.menu_2.addAction(self.action_aquisition_setup)
         self.menu_2.addAction(self.action_synch)
@@ -222,6 +234,10 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.toolButton_realtime, self.toolButton_take_signal)
         MainWindow.setTabOrder(self.toolButton_take_signal, self.toolButton_stop)
         MainWindow.setTabOrder(self.toolButton_stop, self.doubleSpinBox_frame_value)
+        self.statusBar.addWidget(self.widget_status)
+        self.statusBar.addWidget(self.progressBar)
+        self.statusBar.addPermanentWidget(self.label_connect_title)
+        self.statusBar.addPermanentWidget(self.label_connect_value)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -248,10 +264,8 @@ class Ui_MainWindow(object):
         self.action_cascade.setText(_translate("MainWindow", "级联"))
         self.action_clear.setText(_translate("MainWindow", "清除"))
         self.action_subwindow.setText(_translate("MainWindow", "子窗口模式"))
-        self.statusBar.addWidget(self.widget_status)
-        self.statusBar.addWidget(self.progressBar)
-        self.statusBar.addPermanentWidget(self.label_connect_title)
-        self.statusBar.addPermanentWidget(self.label_connect_value)
+        self.action_open_sequence_file.setText(_translate("MainWindow", "打开序列"))
+        self.action_save_sequence_file.setText(_translate("MainWindow", "保存序列"))
 
 import source_rc
 
