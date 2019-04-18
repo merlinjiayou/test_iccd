@@ -14,6 +14,7 @@ from ccd import ccd_em16
 import threading
 import time
 from PyQt5.QtCore import Qt
+import configparser
 
 
 class aquisition_setup(QWidget, Ui_aquisition_setup):
@@ -619,6 +620,357 @@ class aquisition_setup(QWidget, Ui_aquisition_setup):
         self.delayer.set_channel(channel="B",delay=self.doubleSpinBox_delay_b.text()+self.comboBox_delay_b.currentText()[0],width=self.doubleSpinBox_width_b.text()+self.comboBox_width_b.currentText()[0])
         self.delayer.set_channel(channel="C",delayer=self.doubleSpinBox_delay_c.text()+self.comboBox_delay_c.currentText()[0],width=self.doubleSpinBox_width_c.text()+self.comboBox_width_c.currentText()[0])
         self.delayer.set_channel(channel="D",delayer=self.doubleSpinBox_delay_d.text()+self.comboBox_delay_d.currentText()[0],width=self.doubleSpinBox_width_d.text()+self.comboBox_width_d.currentText()[0])
+
+
+    def save_config(self,file_path):
+        config = configparser.ConfigParser()
+        # 添加域
+        config.add_section("camera_setup")
+        config.add_section("gate_setup")
+        config.add_section("sequence")
+        config.add_section("binning/roi_setup")
+        config.add_section("autosave")
+
+        config.set("camera_setup", "measure_mode", self.comboBox_measure_mode.currentText())
+        config.set("camera_setup","readout_mode",self.comboBox_readout_mode.currentText())
+        config.set("camera_setup","trigger_mode",self.comboBox_trigger_mode.currentText())
+        config.set("camera_setup","exposuretime",self.doubleSpinBox_exposure_time.value())
+        config.set("camera_setup","sql_threshold",self.spinBox_threshold.value())
+        config.set("camera_setup","frame_count",self.spinBox_frame_count.value())
+        config.set("camera_setup","readoutspeed",self.comboBox_frame_rate.currentText())
+        config.set("camera_setup","ccd_gain",self.doubleSpinBox_pre_gain.value())
+        config.set("camera_setup","trigger_freq_value",self.doubleSpinBox_internal_trigger_rate.value())
+        config.set("camera_setup","trigger_freq_unit",self.comboBox_internal_trigger_rate_unit.currentText())
+        config.set("camera_setup","divisor",self.doubleSpinBox_divisor.value())
+        config.set("camera_setup","rise_edge",self.comboBox_trigger_edge.currentText())
+        config.set("camrea_setup","impedance",self.comboBox_trigger_impedance.currentText())
+        config.set("camera_setup","trigger_threshold",self.doubleSpinBox_trigger_level.value())
+
+        config.set("gate_setup","mcp_gain",self.spinBox_mcp_gain.value())
+        config.set("gate_setup","ioc_enable",self.checkBox_enable_ioc.isChecked())
+        config.set("gate_setup","fit_ccd",self.radioButton_fit_ccd.isChecked())
+        config.set("gate_setup","burst",self.radioButton_burst.isChecked())
+        config.set("gate_setup","burst_count",self.spinBox_burst_count.value())
+        config.set("gate_setup","delay_value_d",self.doubleSpinBox_delay_d.value())
+        config.set("gate_setup","delay_unit_d",self.comboBox_delay_d.currentText())
+        config.set("gate_setup","width_value_d",self.doubleSpinBox_width_d.value())
+        config.set("gate_setup","width_unit_d",self.comboBox_width_d.currentText())
+
+        config.set("gate_setup","channel_enable_a",self.checkBox_channel_enable_a.isChecked())
+        config.set("gate_setup","delay_value_a",self.doubleSpinBox_delay_a.value())
+        config.set("gate_setup","delay_unit_a",self.comboBox_delay_a.currentText())
+        config.set("gate_setup","width_value_a",self.doubleSpinBox_width_a.value())
+        config.set("gate_setup","width_unit_a",self.comboBox_width_a.currentText())
+        config.set("gate_setup","polarity_a",self.comboBox_polarity_a.currentText())
+        config.set("gate_setup","same_to_gate_a",self.checkBox_same_to_gate_a.isChecked())
+
+        config.set("gate_setup", "channel_enable_b", self.checkBox_channel_enable_b.isChecked())
+        config.set("gate_setup", "delay_value_b", self.doubleSpinBox_delay_b.value())
+        config.set("gate_setup", "delay_unit_b", self.comboBox_delay_b.currentText())
+        config.set("gate_setup", "width_value_b", self.doubleSpinBox_width_b.value())
+        config.set("gate_setup", "width_unit_b", self.comboBox_width_b.currentText())
+        config.set("gate_setup", "polarity_b", self.comboBox_polarity_b.currentText())
+        config.set("gate_setup", "same_to_gate_b", self.checkBox_same_to_gate_b.isChecked())
+
+        config.set("gate_setup", "channel_enable_c", self.checkBox_channel_enable_c.isChecked())
+        config.set("gate_setup", "delay_value_c", self.doubleSpinBox_delay_c.value())
+        config.set("gate_setup", "delay_unit_c", self.comboBox_delay_c.currentText())
+        config.set("gate_setup", "width_value_c", self.doubleSpinBox_width_c.value())
+        config.set("gate_setup", "width_unit_c", self.comboBox_width_c.currentText())
+        config.set("gate_setup", "polarity_c", self.comboBox_polarity_c.currentText())
+        config.set("gate_setup", "same_to_gate_c", self.checkBox_same_to_gate_c.isChecked())
+
+        config.set("sequence","sequence_enable",self.checkBox_enable_sequence.isChecked())
+        config.set("sequence","sequence_measure_count",self.spinBox_measure_count.value())
+        config.set("sequence","autodelay_enable_d",self.checkBox_autodelay_enable_gate.isChecked())
+        config.set("sequence","autodelay_enable_a",self.checkBox_autodelay_enable_a.isChecked())
+        config.set("sequence","autodelay_enable_b",self.checkBox_autodelay_enable_b.isChecked())
+        config.set("sequence","autodelay_enable_c",self.checkBox_autodelay_enable_c.isChecked())
+        config.set("sequence","autodelay_enable_linear",self.radioButton_autodelay_enable_linear.isChecked())
+        config.set("sequence","autodelay_enable_index",self.radioButton_autodelay_enable_index.isChecked())
+        config.set("sequence","autodelay_enable_log",self.radioButton_autodelay_enable_logarithm.isChecked())
+
+        config.set("sequence","autodelay_linear_start",self.doubleSpinBox_autodelay_linear_s.value())
+        config.set("sequence","autodelay_linear_k",self.doubleSpinBox_autodelay_linear_k.value())
+        config.set("sequence","autodealy_linear_b",self.doubleSpinBox_autodelay_linear_b.value())
+        config.set("sequene","autodelay_index_start",self.doubleSpinBox_autodelay_index_s.value())
+        config.set("sequence","autodelay_index_a",self.doubleSpinBox_autodelay_index_a.value())
+        config.set("sequence","autodelay_index_k",self.doubleSpinBox_autodelay_index_k.value())
+        config.set("sequence","autodelay_index_b",self.doubleSpinBox_autodelay_index_b.value())
+        config.set("sequence","autodelay_log_start",self.doubleSpinBox_autodelay_log_s.value())
+        config.set("sequnce","autodelay_log_a",self.doubleSpinBox_autodelay_log_a.value())
+        config.set("sequence","autodelay_log_k",self.doubleSpinBox_autodelay_log_k.value())
+        config.set("sequence","autodelay_log_b",self.doubleSpinBox_autodelay_log_b.value())
+
+        config.set("sequence","autowidth_enable_d",self.checkBox_autowidth_enable_gate.isChecked())
+        config.set("sequence","autowidth_enable_a",self.checkBox_autowidth_enable_a.isChecked())
+        config.set("sequence","autowidth_enable_b",self.checkBox_autowidth_enable_b.isChecked())
+        config.set("sequence","autowidth_enable_c",self.checkBox_autowidth_enable_c.isChecked())
+        config.set("sequence","autowidth_enable_linear",self.radioButton_autowidth_enable_linear.isChecked())
+        config.set("sequence","autowidth_enable_index",self.radioButton_autowidth_enable_index.isChecked())
+        config.set("sequence","autowidth_enable_log",self.radioButton_autowidth_enable_logarithm.isChecked())
+
+        config.set("sequence","autowidth_linear_start",self.doubleSpinBox_autowidth_linear_s.value())
+        config.set("sequence","autowidth_linear_k",self.doubleSpinBox_autowidth_linear_k.value())
+        config.set("sequence","autowidth_linear_b",self.doubleSpinBox_autowidth_linear_b.value())
+        config.set("sequene","autowidth_index_start",self.doubleSpinBox_autowidth_index_s.value())
+        config.set("sequence","autowidth_index_a",self.doubleSpinBox_autowidth_index_a.value())
+        config.set("sequence","autowidth_index_k",self.doubleSpinBox_autowidth_index_k.value())
+        config.set("sequence","autowidth_index_b",self.doubleSpinBox_autowidth_index_b.value())
+        config.set("sequence","autowidth_log_start",self.doubleSpinBox_autowidth_log_s.value())
+        config.set("sequnce","autowidth_log_a",self.doubleSpinBox_autowidth_log_a.value())
+        config.set("sequence","autowidth_log_k",self.doubleSpinBox_autowidth_log_k.value())
+        config.set("sequence","autowidth_log_b",self.doubleSpinBox_autowidth_log_b.value())
+
+        config.set("binning/roi_setup","roi_left",self.spinBox_roi_left.value())
+        config.set("binning/roi_setup","roi_right",self.spinBox_roi_right.value())
+        config.set("binning/roi_setup","roi_bottom",self.spinBox_roi_bottom.value())
+        config.set("binning/roi_setup","roi_top",self.spinBox_roi_top.value())
+        config.set("binning/roi_setup","binning_disable",self.radioButton_binning1.isChecked())
+        config.set("binning/roi_setup","binning_2x2",self.radioButton_binning2.isChecked())
+        config.set("binning/roi_setup","binning_1x2",self.radioButton_binning3.isChecked())
+        config.set("binning/roi_setup","bining_2x1",self.radioButton_binning4.isChecked())
+
+        config.set("autosave","file_type",self.comboBox_file_format.currentText())
+        config.set("autosave","file_name",self.lineEdit_file_name.text())
+        config.set("autosave","file_dir",self.lineEdit_file_path.text())
+        config.set("autosave","file_date_enable",self.checkBox_date.isChecked())
+        config.set("autosave","operator_enable",self.checkBox_operator.isChecked())
+        config.set("autosave","operator_name",self.lineEdit_operator.text())
+
+        config.write(open(file_path,"w+"))
+
+    def load_config(self,file_path):
+        config=configparser.ConfigParser()
+        config.read(file_path)
+        camera_setup=dict(config.items("camera_setup"))
+        gate_setup=dict(config.items("gate_setup"))
+        sequence=dict(config.items("sequence"))
+        binning_roi_setup=dict(config.items("binning/roi_setup"))
+        autosave=dict(config.items("autosave"))
+
+        self.comboBox_measure_mode.setCurrentText(camera_setup["measure_mode"])
+        self.on_comboBox_measure_mode_activated(camera_setup["measure_mode"])
+        self.doubleSpinBox_exposure_time.setValue(camera_setup["exposuretime"])
+        self.on_doubleSpinBox_exposure_time_editingFinished(camera_setup["exposuretime"])
+        self.spinBox_threshold.setValue(camera_setup["sql_threshold"])
+        self.spinBox_frame_count.setValue(camera_setup["frame_count"])
+        self.on_spinBox_frame_count_editingFinished(camera_setup["frame_count"])
+        self.doubleSpinBox_pre_gain.setValue(camera_setup["ccd_gain"])
+        self.on_doubleSpinBox_pre_gain_editingFinished(camera_setup["ccd_gain"])
+        self.doubleSpinBox_internal_trigger_rate.setValue(camera_setup["trigger_freq_value"])
+        self.comboBox_internal_trigger_rate_unit.setCurrentText(camera_setup["trigger_freq_unit"])
+        self.on_comboBox_internal_trigger_rate_unit_activated(camera_setup["trigger_freq_unit"])
+        self.doubleSpinBox_divisor.setValue(camera_setup["divisor"])
+        self.on_doubleSpinBox_divisor_editingFinished(camera_setup["divisor"])
+        self.comboBox_trigger_edge.setCurrentText(camera_setup["rise_edge"])
+        self.on_comboBox_trigger_edge_activated(camera_setup["rise_edge"])
+        self.comboBox_trigger_impedance.setCurrentText(camera_setup["impedance"])
+        self.on_comboBox_trigger_impedance_activated(camera_setup["impedance"])
+        self.doubleSpinBox_trigger_level.setValue(camera_setup["trigger_threshold"])
+        self.on_doubleSpinBox_trigger_level_editingFinished(camera_setup["trigger_threshold"])
+        self.comboBox_trigger_mode.setCurrentText(camera_setup["trigger_mode"])
+        self.on_comboBox_trigger_mode_activated(camera_setup["trigger_mode"])
+
+        self.spinBox_mcp_gain.setValue(gate_setup["mcp_gain"])
+        self.on_spinBox_mcp_gain_editingFinished(gate_setup["mcp_gain"])
+        self.radioButton_fit_ccd.setChecked(gate_setup["fit_ccd"])
+        self.on_radioButton_fit_ccd_clicked(gate_setup["fit_ccd"])
+        self.spinBox_burst_count.setValue(gate_setup["burst_count"])
+        self.on_spinBox_burst_count_editingFinished(gate_setup["burst_count"])
+        self.radioButton_burst.setChecked(gate_setup["burst"])
+        self.on_radioButton_burst_clicked(gate_setup["burst"])
+        self.checkBox_enable_ioc.setChecked(gate_setup["ioc_enable"])
+        self.on_checkBox_enable_ioc_clicked(gate_setup["ioc_enable"])
+
+        self.doubleSpinBox_delay_d.setValue(gate_setup["delay_value_d"])
+        self.comboBox_delay_d.setCurrentText(gate_setup["delay_unit_d"])
+        self.on_comboBox_delay_d_activated(gate_setup["delay_unit_d"])
+        self.doubleSpinBox_width_d.setValue(gate_setup["width_value_d"])
+        self.comboBox_width_d.setCurrentText(gate_setup["width_unit_d"])
+        self.on_comboBox_width_d_activated(gate_setup["width_unit_d"])
+
+        self.doubleSpinBox_delay_a.setValue(gate_setup["delay_value_a"])
+        self.comboBox_delay_a.setCurrentText(gate_setup["delay_unit_a"])
+        self.on_comboBox_delay_a_activated(gate_setup["delay_unit_a"])
+        self.doubleSpinBox_width_a.setValue(gate_setup["width_value_a"])
+        self.comboBox_width_a.setCurrentText(gate_setup["width_unit_a"])
+        self.on_comboBox_width_a_activated(gate_setup["width_unit_a"])
+        self.comboBox_polarity_a.setCurrentText(gate_setup["polarity_a"])
+        self.on_comboBox_polarity_a_activated(gate_setup["polarity_a"])
+        self.checkBox_same_to_gate_a.setChecked(gate_setup["same_to_gate_a"])
+        self.on_checkBox_same_to_gate_a_clicked(gate_setup["same_to_gate_a"])
+        self.checkBox_channel_enable_a.setChecked(gate_setup["channel_enable_a"])
+        self.on_checkBox_channel_enable_a_clicked(gate_setup["channel_enable_a"])
+
+        self.doubleSpinBox_delay_b.setValue(gate_setup["delay_value_b"])
+        self.comboBox_delay_b.setCurrentText(gate_setup["delay_unit_b"])
+        self.on_comboBox_delay_b_activated(gate_setup["delay_unit_b"])
+        self.doubleSpinBox_width_b.setValue(gate_setup["width_value_b"])
+        self.comboBox_width_b.setCurrentText(gate_setup["width_unit_b"])
+        self.on_comboBox_width_b_activated(gate_setup["width_unit_b"])
+        self.comboBox_polarity_b.setCurrentText(gate_setup["polarity_b"])
+        self.on_comboBox_polarity_b_activated(gate_setup["polarity_b"])
+        self.checkBox_same_to_gate_b.setChecked(gate_setup["same_to_gate_b"])
+        self.on_checkBox_same_to_gate_b_clicked(gate_setup["same_to_gate_b"])
+        self.checkBox_channel_enable_b.setChecked(gate_setup["channel_enable_b"])
+        self.on_checkBox_channel_enable_b_clicked(gate_setup["channel_enable_b"])
+
+        self.doubleSpinBox_delay_c.setValue(gate_setup["delay_value_c"])
+        self.comboBox_delay_c.setCurrentText(gate_setup["delay_unit_c"])
+        self.on_comboBox_delay_c_activated(gate_setup["delay_unit_c"])
+        self.doubleSpinBox_width_c.setValue(gate_setup["width_value_c"])
+        self.comboBox_width_c.setCurrentText(gate_setup["width_unit_c"])
+        self.on_comboBox_width_c_activated(gate_setup["width_unit_c"])
+        self.comboBox_polarity_c.setCurrentText(gate_setup["polarity_c"])
+        self.on_comboBox_polarity_c_activated(gate_setup["polarity_c"])
+        self.checkBox_same_to_gate_c.setChecked(gate_setup["same_to_gate_c"])
+        self.on_checkBox_same_to_gate_c_clicked(gate_setup["same_to_gate_c"])
+        self.checkBox_channel_enable_c.setChecked(gate_setup["channel_enable_c"])
+        self.on_checkBox_channel_enable_c_clicked(gate_setup["channel_enable_c"])
+
+        self.checkBox_enable_sequence.setChecked(sequence["sequence_enable"])
+        self.spinBox_measure_count.setValue(sequence["sequence_measure_count"])
+        self.checkBox_autodelay_enable_gate.setChecked(sequence["autodelay_enable_d"])
+        self.checkBox_autodelay_enable_a.setChecked(sequence["autodelay_enable_a"])
+        self.checkBox_autodelay_enable_b.setChecked(sequence["autodelay_enable_b"])
+        self.checkBox_autodelay_enable_c.setChecked(sequence["autodelay_enable_c"])
+        self.radioButton_autodelay_enable_linear.setChecked(sequence["autodelay_enable_linear"])
+        self.radioButton_autodelay_enable_index.setChecked(sequence["autodelay_enable_index"])
+        self.radioButton_autodelay_enable_logarithm.setChecked(sequence["autodelay_enable_log"])
+        self.doubleSpinBox_autodelay_linear_s.setValue(sequence["autodelay_linear_start"])
+        self.doubleSpinBox_autodelay_linear_k.setValue(sequence["autodelay_linear_k"])
+        self.doubleSpinBox_autodelay_linear_b.setValue(sequence["autodealy_linear_b"])
+        self.doubleSpinBox_autodelay_index_s.setValue(sequence["autodelay_index_start"])
+        self.doubleSpinBox_autodelay_index_a.setValue(sequence["autodelay_index_a"])
+        self.doubleSpinBox_autodelay_index_k.setValue(sequence["autodelay_index_k"])
+        self.doubleSpinBox_autodelay_index_b.setValue(sequence["autodelay_index_b"])
+        self.doubleSpinBox_autodelay_log_s.setValue(sequence["autodelay_log_start"])
+        self.doubleSpinBox_autodelay_log_a.setValue(sequence["autodelay_log_a"])
+        self.doubleSpinBox_autodelay_log_k.setValue(sequence["autodelay_log_k"])
+        self.doubleSpinBox_autodelay_log_b.setValue(sequence["autodelay_log_b"])
+
+        self.checkBox_autowidth_enable_gate.setChecked(sequence["autowidth_enable_d"])
+        self.checkBox_autowidth_enable_a.setChecked(sequence["autowidth_enable_a"])
+        self.checkBox_autowidth_enable_b.setChecked(sequence["autowidth_enable_b"])
+        self.checkBox_autowidth_enable_c.setChecked(sequence["autowidth_enable_c"])
+        self.radioButton_autowidth_enable_linear.setChecked(sequence["autowidth_enable_linear"])
+        self.radioButton_autowidth_enable_index.setChecked(sequence["autowidth_enable_index"])
+        self.radioButton_autowidth_enable_logarithm.setChecked(sequence["autowidth_enable_log"])
+        self.doubleSpinBox_autowidth_linear_s.setValue(sequence["autowidth_linear_start"])
+        self.doubleSpinBox_autowidth_linear_k.setValue(sequence["autowidth_linear_k"])
+        self.doubleSpinBox_autowidth_linear_b.setValue(sequence["autodealy_linear_b"])
+        self.doubleSpinBox_autowidth_index_s.setValue(sequence["autowidth_index_start"])
+        self.doubleSpinBox_autowidth_index_a.setValue(sequence["autowidth_index_a"])
+        self.doubleSpinBox_autowidth_index_k.setValue(sequence["autowidth_index_k"])
+        self.doubleSpinBox_autowidth_index_b.setValue(sequence["autowidth_index_b"])
+        self.doubleSpinBox_autowidth_log_s.setValue(sequence["autowidth_log_start"])
+        self.doubleSpinBox_autowidth_log_a.setValue(sequence["autowidth_log_a"])
+        self.doubleSpinBox_autowidth_log_k.setValue(sequence["autowidth_log_k"])
+        self.doubleSpinBox_autowidth_log_b.setValue(sequence["autowidth_log_b"])
+
+
+        self.spinBox_roi_left.setValue(binning_roi_setup["roi_left"])
+        self.spinBox_roi_right.setValue(binning_roi_setup["roi_right"])
+        self.spinBox_roi_bottom.setValue(binning_roi_setup["roi_bottom"])
+        self.spinBox_roi_top.setValue(binning_roi_setup["roi_top"])
+        self.on_pushButton_roi_sure_clicked()
+
+        self.radioButton_binning1.setChecked(binning_roi_setup["binning_disable"])
+        self.on_radioButton_binning1_clicked(binning_roi_setup["binning_disable"])
+        self.radioButton_binning2.setChecked(binning_roi_setup["binning_2x2"])
+        self.on_radioButton_binning2_clicked(binning_roi_setup["binning_2x2"])
+        self.radioButton_binning3.setChecked(binning_roi_setup["binning_1x2"])
+        self.on_radioButton_binning3_clicked(binning_roi_setup["binning_1x2"])
+        self.radioButton_binning4.setChecked(binning_roi_setup["bining_2x1"])
+        self.on_radioButton_binning4_clicked(binning_roi_setup["bining_2x1"])
+
+
+        self.comboBox_file_format.setCurrentText(autosave["file_type"])
+        self.lineEdit_file_name.setText(autosave["file_name"])
+        self.lineEdit_file_path.setText(autosave["file_dir"])
+        self.checkBox_date.setText(autosave["file_date_enable"])
+        self.checkBox_operator.setChecked(autosave["operator_enable"])
+        self.lineEdit_operator.setText(autosave["operator_name"])
+
+        self.comboBox_frame_rate.setCurrentText(camera_setup["readoutspeed"])
+        self.on_comboBox_frame_rate_activated(camera_setup["readoutspeed"])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

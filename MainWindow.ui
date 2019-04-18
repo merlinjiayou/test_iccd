@@ -255,6 +255,8 @@
     <addaction name="action_open"/>
     <addaction name="action_open_sequence_file"/>
     <addaction name="action_save_sequence_file"/>
+    <addaction name="action_open_config"/>
+    <addaction name="action_save_config"/>
     <addaction name="action_exit"/>
    </widget>
    <widget class="QMenu" name="menu_2">
@@ -451,6 +453,27 @@
    </property>
    <property name="text">
     <string>保存序列</string>
+   </property>
+  </action>
+  <action name="action_save_config">
+   <property name="icon">
+    <iconset resource="source.qrc">
+     <normaloff>:/ico/ico_file/1143888.png</normaloff>:/ico/ico_file/1143888.png</iconset>
+   </property>
+   <property name="text">
+    <string>保存配置</string>
+   </property>
+  </action>
+  <action name="action_open_config">
+   <property name="icon">
+    <iconset resource="source.qrc">
+     <normaloff>:/ico/ico_file/1140575.png</normaloff>:/ico/ico_file/1140575.png</iconset>
+   </property>
+   <property name="text">
+    <string>加载配置</string>
+   </property>
+   <property name="toolTip">
+    <string>打开配置</string>
    </property>
   </action>
  </widget>

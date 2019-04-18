@@ -20,6 +20,7 @@ class graph_widget(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super(graph_widget, self).__init__(parent)
         self.setupUi(self)
+        self.setWindowTitle("实时显示")
         self.centralWidget.hide()
         pg.setConfigOptions(imageAxisOrder='row-major')
         self.image_list=[]

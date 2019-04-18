@@ -210,13 +210,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.doubleSpinBox_frame_value.setValue(self.ccd.get_frame_rate())
             self.label_connect_value.setStyleSheet("background-color: rgb(0, 255, 0);")
         else:
-            # self.toolButton_realtime.setDisabled(True)
-            # self.toolButton_take_signal.setDisabled(True)
-            # self.toolButton_stop.setDisabled(True)
-            # self.action_aquisition_setup.setDisabled(True)
-            # self.action_synch.setDisabled(True)
-            # self.aquisition_widget.setDisabled(True)
-            # self.synch_widget.setDisabled(True)
+            self.toolButton_realtime.setDisabled(True)
+            self.toolButton_take_signal.setDisabled(True)
+            self.toolButton_stop.setDisabled(True)
+            self.action_aquisition_setup.setDisabled(True)
+            self.action_synch.setDisabled(True)
+            self.aquisition_widget.setDisabled(True)
+            self.synch_widget.setDisabled(True)
             self.label_connect_value.setStyleSheet("background-color: rgb(255, 0, 0);")
             if self.war_times==0:
                 self.war_times+=1
@@ -595,6 +595,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     @pyqtSlot()
     def on_action_save_sequence_file_triggered(self):
+        worker=threading.Thread(target=self.save_sequence_file_worker)
+        worker.setDaemon(True)
+        worker.start()
+
+    def save_sequence_file_worker(self):
         file_path,_=QtWidgets.QFileDialog.getSaveFileName(self,"保存序列文件",self.file_path["save"],"file type(*.tiff);;file type(*.png);;file type(*.jpg);;file type(*.csv)")
         if file_path:
             self.file_path["save"] = os.path.split(file_path)[0]
@@ -613,6 +618,29 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             cv2.imwrite(save_file_path, data)
                     except:
                         self.show_message_box_signal.emit("数据错误")
+
+    @pyqtSlot()
+    def on_action_save_config_triggered(self):
+        worker=threading.Thread(target=self.save_config_worker)
+        worker.setDaemon(True)
+        worker.start()
+
+    def save_config_worker(self):
+        file_path,_=QtWidgets.QFileDialog.getSaveFileName(self,"保存配置",self.file_path["save"],"file type(*.ini)")
+        if file_path:
+            self.aquisition_widget.save_config(file_path)
+
+
+    @pyqtSlot()
+    def on_action_open_config_triggered(self):
+        worker=threading.Thread(target=self.open_config_worker)
+        worker.setDaemon(True)
+        worker.start()
+
+    def open_config_worker(self):
+        file_path,_=QtWidgets.QFileDialog.getOpenFileName(self,"加载配置",self.file_path["open"],"file type(*.ini)")
+        if file_path:
+            self.aquisition_widget.load_config(file_path)
 
     
     @pyqtSlot()
@@ -646,6 +674,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.mdiArea.setViewMode(QtWidgets.QMdiArea.SubWindowView)
         else:
             self.mdiArea.setViewMode(QtWidgets.QMdiArea.TabbedView)
+
+
 
 
 if __name__ == "__main__":

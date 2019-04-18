@@ -2620,374 +2620,6 @@
  </resources>
  <connections>
   <connection>
-   <sender>checkBox_enable_ioc</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>widget_IOC</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>141</x>
-     <y>150</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>141</x>
-     <y>219</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radioButton_burst</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>spinBox_burst_count</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>150</x>
-     <y>209</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>114</x>
-     <y>237</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_enable_autosave</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>widget</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>112</x>
-     <y>60</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>112</x>
-     <y>99</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_a</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>doubleSpinBox_delay_a</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>345</x>
-     <y>118</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>465</x>
-     <y>146</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_a</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>doubleSpinBox_width_a</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>345</x>
-     <y>118</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>465</x>
-     <y>173</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_a</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comboBox_polarity_a</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>345</x>
-     <y>118</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>465</x>
-     <y>200</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_a</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comboBox_delay_a</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>345</x>
-     <y>118</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>566</x>
-     <y>146</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_a</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comboBox_width_a</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>345</x>
-     <y>118</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>566</x>
-     <y>173</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_a</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>checkBox_same_to_gate_a</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>345</x>
-     <y>118</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>345</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_b</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>doubleSpinBox_delay_b</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>334</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>305</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_b</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>checkBox_same_to_gate_b</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>334</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>334</x>
-     <y>109</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_b</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>doubleSpinBox_width_b</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>334</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>305</x>
-     <y>108</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_b</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comboBox_polarity_b</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>334</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>305</x>
-     <y>110</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_b</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comboBox_delay_b</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>334</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>333</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_b</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comboBox_width_b</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>334</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>333</x>
-     <y>108</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_c</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>checkBox_same_to_gate_c</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>334</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>334</x>
-     <y>109</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_c</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>doubleSpinBox_delay_c</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>334</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>305</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_c</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>doubleSpinBox_width_c</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>334</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>305</x>
-     <y>108</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_c</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comboBox_polarity_c</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>334</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>305</x>
-     <y>110</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_c</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comboBox_delay_c</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>334</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>333</x>
-     <y>105</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_channel_enable_c</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comboBox_width_c</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>334</x>
-     <y>99</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>333</x>
-     <y>108</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>windowTitleChanged(QString)</signal>
-   <receiver>widget_total_frame_count</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>331</x>
-     <y>17</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>171</x>
-     <y>232</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>windowTitleChanged(QString)</signal>
-   <receiver>widget_external_trigger</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>458</x>
-     <y>13</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>434</x>
-     <y>286</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>tabWidget</sender>
    <signal>windowTitleChanged(QString)</signal>
    <receiver>widget_IOC</receiver>
@@ -3016,22 +2648,6 @@
     <hint type="destinationlabel">
      <x>103</x>
      <y>154</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radioButton_autodelay_enable_linear</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>widget_4</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>82</x>
-     <y>170</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>62</x>
-     <y>216</y>
     </hint>
    </hints>
   </connection>
@@ -3068,6 +2684,54 @@
    </hints>
   </connection>
   <connection>
+   <sender>checkBox_channel_enable_b</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>checkBox_same_to_gate_b</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>109</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_a</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>doubleSpinBox_width_a</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>345</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>465</x>
+     <y>173</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_autodelay_enable_linear</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widget_4</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>170</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>62</x>
+     <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>radioButton_autowidth_enable_linear</sender>
    <signal>toggled(bool)</signal>
    <receiver>widget_9</receiver>
@@ -3100,6 +2764,54 @@
    </hints>
   </connection>
   <connection>
+   <sender>checkBox_channel_enable_b</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>doubleSpinBox_delay_b</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_enable_autosave</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widget</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>112</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>112</x>
+     <y>99</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_a</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboBox_width_a</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>345</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>566</x>
+     <y>173</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>radioButton_autowidth_enable_logarithm</sender>
    <signal>toggled(bool)</signal>
    <receiver>widget_11</receiver>
@@ -3112,6 +2824,310 @@
     <hint type="destinationlabel">
      <x>564</x>
      <y>542</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_c</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboBox_polarity_c</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>110</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_a</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboBox_delay_a</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>345</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>566</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_b</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboBox_delay_b</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>333</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_c</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>doubleSpinBox_delay_c</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>windowTitleChanged(QString)</signal>
+   <receiver>widget_external_trigger</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>458</x>
+     <y>13</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>434</x>
+     <y>286</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_a</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>checkBox_same_to_gate_a</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>345</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>345</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_c</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboBox_delay_c</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>333</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_c</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>checkBox_same_to_gate_c</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>109</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_burst</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>spinBox_burst_count</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>150</x>
+     <y>209</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>114</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_a</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboBox_polarity_a</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>345</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>465</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_b</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboBox_polarity_b</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>110</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_c</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>doubleSpinBox_width_c</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>108</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_enable_ioc</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widget_IOC</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>141</x>
+     <y>150</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>141</x>
+     <y>219</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_a</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>doubleSpinBox_delay_a</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>345</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>465</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_c</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboBox_width_c</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>333</x>
+     <y>108</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_b</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboBox_width_b</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>333</x>
+     <y>108</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>windowTitleChanged(QString)</signal>
+   <receiver>widget_total_frame_count</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>331</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>171</x>
+     <y>232</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_channel_enable_b</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>doubleSpinBox_width_b</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>108</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>windowTitleChanged(QString)</signal>
+   <receiver>widget_6</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>173</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>192</x>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -3132,6 +3148,22 @@
    </hints>
   </connection>
   <connection>
+   <sender>tabWidget</sender>
+   <signal>windowTitleChanged(QString)</signal>
+   <receiver>widget_10</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>441</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>456</x>
+     <y>495</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>checkBox_enable_sequence</sender>
    <signal>toggled(bool)</signal>
    <receiver>groupBox_9</receiver>
@@ -3144,6 +3176,22 @@
     <hint type="destinationlabel">
      <x>75</x>
      <y>108</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>windowTitleChanged(QString)</signal>
+   <receiver>widget_8</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>196</x>
+     <y>13</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>187</x>
+     <y>310</y>
     </hint>
    </hints>
   </connection>
@@ -3166,38 +3214,6 @@
   <connection>
    <sender>tabWidget</sender>
    <signal>windowTitleChanged(QString)</signal>
-   <receiver>widget_6</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>401</x>
-     <y>16</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>131</x>
-     <y>263</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>windowTitleChanged(QString)</signal>
-   <receiver>widget_10</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>441</x>
-     <y>16</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>456</x>
-     <y>495</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>windowTitleChanged(QString)</signal>
    <receiver>widget_11</receiver>
    <slot>hide()</slot>
    <hints>
@@ -3214,32 +3230,16 @@
   <connection>
    <sender>tabWidget</sender>
    <signal>windowTitleChanged(QString)</signal>
-   <receiver>widget_8</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>196</x>
-     <y>13</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>187</x>
-     <y>310</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tabWidget</sender>
-   <signal>windowTitleChanged(QString)</signal>
    <receiver>widget_6</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>173</x>
-     <y>23</y>
+     <x>401</x>
+     <y>16</y>
     </hint>
     <hint type="destinationlabel">
-     <x>192</x>
-     <y>229</y>
+     <x>131</x>
+     <y>263</y>
     </hint>
    </hints>
   </connection>
