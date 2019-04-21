@@ -12,7 +12,8 @@ from PyQt5.QtWidgets import QMainWindow
 from Ui_graph_widget import Ui_MainWindow
 import numpy as np
 
-
+pg.setConfigOption('background', [115,115,115])
+pg.setConfigOption('foreground', [250,250,250])
 class graph_widget(QMainWindow, Ui_MainWindow):
     """
     Class documentation goes here.
@@ -24,6 +25,7 @@ class graph_widget(QMainWindow, Ui_MainWindow):
         self.centralWidget.hide()
         pg.setConfigOptions(imageAxisOrder='row-major')
         self.image_list=[]
+        self.abridge_list=[]
         self.imgitem = pg.ImageItem()
         self.last_imageitem=None
         self.vertical_data=np.zeros(100)
@@ -32,6 +34,7 @@ class graph_widget(QMainWindow, Ui_MainWindow):
         #添加3D窗口
         self.window_3D = gl.GLViewWidget()
         self.window_3D.setMinimumHeight(100)
+        self.window_3D.setBackgroundColor([110,110,110])
         self.verticalLayout_3D.addWidget(self.window_3D)
 
         #添加图像窗口
@@ -112,7 +115,7 @@ class graph_widget(QMainWindow, Ui_MainWindow):
         self.vertical_plot.setXLink(self.image_plot)
         self.horizontal_plot.setYLink(self.image_plot)
         # 设置示例
-        self.add_3d_example()
+        # self.add_3d_example()
 
 
     def init_ui(self):
@@ -184,10 +187,21 @@ class graph_widget(QMainWindow, Ui_MainWindow):
 
     def add_image_3D(self,data):
         """向3D控件中添加图像"""
+        if "ushort" in str(type(data)):
+            data = np.array(data, dtype=np.uint16)
+        elif 'numpy' in str(type(data)):
+            data = data
+        elif "long" in str(type(data)):
+            data=np.array(data,dtype=np.int32)
+        else:
+            data = np.array(data, dtype=np.uint8)
+        data_3d=data[::4,::4]+data[1:,1:][::4,::4]+data[2:,2:][::4,::4]+data[3:,3:][::4,::4]
+        # self.abridge_list.append(data_3d)
         self.image_list.append(data)
         image_count=len(self.window_3D.items)
-        levels = (-0.1, 0.1)
-        tex1 = pg.makeRGBA(data, levels=levels)[0]  # yz plane
+
+        levels = (0, 1)
+        tex1 = pg.makeRGBA(data_3d, levels=levels)[0]  # yz plane
         ## Create three image items from textures, add to view
         v1 = gl.GLImageItem(tex1)
         v1.translate(0, 0,-image_count*data.shape[0])
@@ -230,13 +244,16 @@ class graph_widget(QMainWindow, Ui_MainWindow):
             self.plot_spectral()
 
     def view_pixel_value(self,evt):
-        pos = evt[0]  ## using signal proxy turns original arguments into a tuple
-        if self.image_plot.sceneBoundingRect().contains(pos):
-            mousePoint = self.image_vb.mapSceneToView(pos)
-            index_x = int(mousePoint.x())
-            index_y = int(mousePoint.y())
-            if index_x > 0 and index_x < self.image_data.shape[1] and index_y > 0 and index_y < self.image_data.shape[0]:
-                self.label_image.setText("X,Y=%.2f,%.2f  Value=%.2f" % (index_x, index_y, self.image_data[index_y, index_x]))
+        try:
+            pos = evt[0]  ## using signal proxy turns original arguments into a tuple
+            if self.image_plot.sceneBoundingRect().contains(pos):
+                mousePoint = self.image_vb.mapSceneToView(pos)
+                index_x = int(mousePoint.x())
+                index_y = int(mousePoint.y())
+                if index_x > 0 and index_x < self.image_data.shape[1] and index_y > 0 and index_y < self.image_data.shape[0]:
+                    self.label_image.setText("X,Y=%.2f,%.2f  Value=%.2f" % (index_x, index_y, self.image_data[index_y, index_x]))
+        except:
+            pass
 
     @pyqtSlot(bool)
     def on_action_vertical_binning_triggered(self, checked):
@@ -380,12 +397,12 @@ class graph_widget(QMainWindow, Ui_MainWindow):
 
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = graph_widget()
-    MainWindow.show()
-    sys.exit(app.exec_())
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     MainWindow = graph_widget()
+#     MainWindow.show()
+#     sys.exit(app.exec_())
     
 
     

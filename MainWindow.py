@@ -78,6 +78,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.gain_controler=gain_controler()
         self.ccd=ccd_em16()
 
+
         self.synch_widget=None
         self.aquisition_widget=None
 
@@ -93,7 +94,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         check_connect_status_worker.setDaemon(True)
         check_connect_status_worker.start()
         self.connect_widget_status()
-
 
 
 
@@ -204,10 +204,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def init_ui(self):
         self.aquisition_widget.tabWidget.setWindowTitle("config")
-        print(self.delayer.connect_status,self.gain_controler.connect_status,self.ccd.connect_status)
+        # print(self.delayer.connect_status,self.gain_controler.connect_status,self.ccd.connect_status)
         if self.delayer.connect_status and self.gain_controler.connect_status and self.ccd.connect_status:
             self.label_resolution_value.setText(str(self.ccd.get_format()))
-            self.doubleSpinBox_frame_value.setValue(self.ccd.get_frame_rate())
+            intergrationtime=self.ccd.get_integration_time()
+            frame_rate=self.ccd.get_frame_rate()
+            if intergrationtime>1/frame_rate:
+                self.doubleSpinBox_frame_value.setValue(1/intergrationtime)
+            else:self.doubleSpinBox_frame_value.setValue(frame_rate)
             self.label_connect_value.setStyleSheet("background-color: rgb(0, 255, 0);")
         else:
             self.toolButton_realtime.setDisabled(True)
@@ -215,8 +219,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.toolButton_stop.setDisabled(True)
             self.action_aquisition_setup.setDisabled(True)
             self.action_synch.setDisabled(True)
-            self.aquisition_widget.setDisabled(True)
-            self.synch_widget.setDisabled(True)
+            self.aquisition_widget.tabWidget.setDisabled(True)
+            self.synch_widget.tabWidget_output_setup.setDisabled(True)
+            self.synch_widget.doubleSpinBox_exposure.setDisabled(True)
+            self.synch_widget.spinBox_mcp_gain.setDisabled(True)
             self.label_connect_value.setStyleSheet("background-color: rgb(255, 0, 0);")
             if self.war_times==0:
                 self.war_times+=1
@@ -354,31 +360,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def sequence(self):
         self.lock.acquire()
         self.delayer.channel_enable("D", "ON")
+        display_worker = threading.Thread(target=self.display_sequence_data)
+        display_worker.setDaemon(True)
+        display_worker.start()
         for i in range(self.aquisition_widget.spinBox_measure_count.value()):
             if self.toolButton_stop.isChecked():
                 break
-            self.set_sequence_parameter()
+            self.aquisition_widget.set_sequence_parameter(i)
             self.get_sequence_data()
             self.add_sequence_data_signal.emit()
         self.aquisition_widget.recovery_parameter()
         self.delayer.channel_enable("D", "OFF")
+        self.update_buttom_signal.emit()
         self.lock.release()
+
 
 
     def get_sequence_data(self):
         if self.aquisition_widget.comboBox_measure_mode.currentText()=="单次":
             if self.ccd.cam.LiveVideoRunning:
                 self.image = np.array(self.ccd.get_data())
-                self.plot_active_subwindow_signal.emit()
         elif self.aquisition_widget.comboBox_measure_mode.currentText()=="累加":
             if self.ccd.cam.LiveVideoRunning:
                 worker_list = []
                 self.count_list.clear()
                 self.data_list.clear()
-
-                display_worker = threading.Thread(target=self.display_data)
-                display_worker.setDaemon(True)
-                display_worker.start()
 
                 total_count = self.aquisition_widget.spinBox_frame_count.value()
                 for i in range(5):
@@ -398,10 +404,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.count_list.clear()
                 self.data_list.clear()
 
-                display_worker = threading.Thread(target=self.display_data)
-                display_worker.setDaemon(True)
-                display_worker.start()
-
                 total_count = self.aquisition_widget.spinBox_frame_count.value()
                 for i in range(5):
                     count = total_count // (5 - i)
@@ -420,7 +422,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def add_sequence_data(self):
         self.active_subwindow.graph_widget.add_image_3D(self.image)
 
-
+    def display_sequence_data(self):
+        while self.toolButton_take_signal.isChecked():
+            total_count = 0
+            if self.count_list!=[]:
+                for count in self.count_list:
+                    total_count+=count
+                value=round(total_count / self.aquisition_widget.config["frame_count"]*100)
+                self.update_progressbar_signal.emit(value)
+            if self.data_list!=[]:
+                for num ,data in enumerate(self.data_list):
+                    data=np.array(data)
+                    if num==0:
+                        self.image=data
+                    else:
+                        self.image=np.add(self.image,data)
+                self.plot_active_subwindow_signal.emit()
+            time.sleep(0.03)
 
     def display_data(self):
         while self.toolButton_take_signal.isChecked():
@@ -452,7 +470,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.active_subwindow.graph_widget.plot_image(self.image)
 
     def update_realtime_subwindow(self):
-        self.realtime_subwindow.graph_widget.plot(self.realtime_image)
+        self.realtime_subwindow.graph_widget.plot_image(self.realtime_image)
 
 
 
@@ -506,10 +524,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def on_toolButton_take_signal_toggled(self, checked):
         if checked:
             self.add_subwindow_signal.emit()
-            mode_dic={"单次":self.single_measure,"累加":self.accumulation,"运动":None,"光子计数":self.spc}
-            worker=threading.Thread(target=mode_dic[self.aquisition_widget.config["mode"]])
-            worker.setDaemon(True)
-            worker.start()
+            if self.aquisition_widget.checkBox_enable_sequence.isChecked():
+                worker = threading.Thread(target=self.sequence)
+                worker.setDaemon(True)
+                worker.start()
+            else:
+                mode_dic={"单次":self.single_measure,"累加":self.accumulation,"运动":None,"光子计数":self.spc}
+                worker=threading.Thread(target=mode_dic[self.aquisition_widget.config["mode"]])
+                worker.setDaemon(True)
+                worker.start()
 
     
     @pyqtSlot(bool)
@@ -520,6 +543,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def on_action_aquisition_setup_triggered(self):
         self.aquisition_widget.resize(self.aquisition_widget.minimumSizeHint())
         self.aquisition_widget.show()
+        self.aquisition_widget.showNormal()
 
 
     
@@ -547,8 +571,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     @pyqtSlot()
     def on_action_open_triggered(self):
-        worker=threading.Thread(target=self.open_file_worker)
-        worker.start()
+        self.worker=threading.Thread(target=self.open_file_worker)
+        self.worker.start()
 
     def open_file_worker(self):
         filepath, _ = QtWidgets.QFileDialog.getOpenFileName(caption="打开文件", directory=self.file_path["open"],
@@ -569,41 +593,45 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     @pyqtSlot()
     def on_action_open_sequence_file_triggered(self):
-        worker=threading.Thread(target=self.open_sequence_file_worker)
-        worker.setDaemon(True)
-        worker.start()
+        self.worker=threading.Thread(target=self.open_sequence_file_worker)
+        self.worker.setDaemon(True)
+        self.worker.start()
 
     def open_sequence_file_worker(self):
-        file_path_list,_=QtWidgets.QFileDialog.getOpenFileNames(self,"打开序列文件",self.file_path["open"],"file type(*.tiff);;file type(*.png);;file type(*.jpg);;file type(*.csv)")
-        if file_path_list:
-            file_path_list=[]
-            file_path_list.sort()
-            self.add_subwindow_signal.emit()
-            for file_path in file_path_list:
-                try:
-                    self.file_path["open"] = os.path.split(file_path)[0]
-                    if ".csv" in file_path:
-                        self.image = np.loadtxt(file_path, delimiter=",")
-                    else:
-                        self.image = cv2.imread(file_path, 0)
-                    self.image = self.image[::-1]
-                    self.add_sequence_data_signal.emit()
-                except:
-                    self.show_message_box_signal.emit("文件格式错误")
+        try:
+            file_path_list,_=QtWidgets.QFileDialog.getOpenFileNames(None,"打开序列文件",self.file_path["open"],"file type(*.tiff);;file type(*.png);;file type(*.jpg);;file type(*.csv)")
+            print(file_path_list)
+            if file_path_list!=[]:
+                self.file_path["open"] = os.path.split(file_path_list[0])[0]
+                file_path_list.sort()
+                self.add_subwindow_signal.emit()
+                for file_path in file_path_list:
+                    try:
+                        if ".csv" in file_path:
+                            self.image = np.loadtxt(file_path, delimiter=",")
+                        else:
+                            self.image = cv2.imread(file_path, 0)
+                        self.image = self.image[::-1]
+                        self.add_sequence_data_signal.emit()
+                        time.sleep(0.1)
+                    except:
+                        self.show_message_box_signal.emit("文件格式错误")
+        except:self.show_message_box_signal.emit("加载错误，请重新加载")
+
 
 
 
     @pyqtSlot()
     def on_action_save_sequence_file_triggered(self):
-        worker=threading.Thread(target=self.save_sequence_file_worker)
-        worker.setDaemon(True)
-        worker.start()
+        self.worker=threading.Thread(target=self.save_sequence_file_worker)
+        self.worker.setDaemon(True)
+        self.worker.start()
 
     def save_sequence_file_worker(self):
-        file_path,_=QtWidgets.QFileDialog.getSaveFileName(self,"保存序列文件",self.file_path["save"],"file type(*.tiff);;file type(*.png);;file type(*.jpg);;file type(*.csv)")
+        file_path,_=QtWidgets.QFileDialog.getSaveFileName(None,"保存序列文件",self.file_path["save"],"file type(*.tiff);;file type(*.png);;file type(*.jpg);;file type(*.csv)")
         if file_path:
             self.file_path["save"] = os.path.split(file_path)[0]
-            file_name_full=os.path.split(file_path)[0]
+            file_name_full=os.path.split(file_path)[1]
             file_name=os.path.splitext(file_name_full)[0]
             file_exp=os.path.splitext(file_name_full)[1]
             active_subwindow = self.mdiArea.activeSubWindow()
@@ -621,26 +649,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     @pyqtSlot()
     def on_action_save_config_triggered(self):
-        worker=threading.Thread(target=self.save_config_worker)
-        worker.setDaemon(True)
-        worker.start()
+        self.worker=threading.Thread(target=self.save_config_worker)
+        # self.worker.setDaemon(True)
+        self.worker.start()
 
     def save_config_worker(self):
-        file_path,_=QtWidgets.QFileDialog.getSaveFileName(self,"保存配置",self.file_path["save"],"file type(*.ini)")
+        file_path,_=QtWidgets.QFileDialog.getSaveFileName(None,"save config",self.file_path["save"],"file type(*.ini)")
         if file_path:
             self.aquisition_widget.save_config(file_path)
+            # QtWidgets.QMessageBox.information(None, "提示", "加载完成", QtWidgets.QMessageBox.Ok)
 
 
     @pyqtSlot()
     def on_action_open_config_triggered(self):
-        worker=threading.Thread(target=self.open_config_worker)
-        worker.setDaemon(True)
-        worker.start()
+        self.worker=threading.Thread(target=self.open_config_worker)
+        self.worker.setDaemon(True)
+        self.worker.start()
 
     def open_config_worker(self):
-        file_path,_=QtWidgets.QFileDialog.getOpenFileName(self,"加载配置",self.file_path["open"],"file type(*.ini)")
+        file_path,_=QtWidgets.QFileDialog.getOpenFileName(None,"加载配置",self.file_path["open"],"file type(*.ini)")
         if file_path:
             self.aquisition_widget.load_config(file_path)
+            # QtWidgets.QMessageBox.information(None, "提示", "加载完成", QtWidgets.QMessageBox.Ok)
 
     
     @pyqtSlot()
@@ -650,6 +680,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     @pyqtSlot()
     def on_action_synch_triggered(self):
         self.synch_widget.show()
+        self.synch_widget.showNormal()
 
 
     def closeEvent(self, *args, **kwargs):
@@ -675,7 +706,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             self.mdiArea.setViewMode(QtWidgets.QMdiArea.TabbedView)
 
+    @pyqtSlot()
+    def on_action_save_config_todevice_triggered(self):
+        self.ccd.Save_Device_State()
+        self.delayer.save_config()
 
+    @pyqtSlot()
+    def on_action_load_deviece_config_triggered(self):
+        self.aquisition_widget.ccd.Load_Device_State()
+        self.aquisition_widget.delayer.init_device()
+        self.aquisition_widget.delayer.load_config()
+        self.aquisition_widget.init_ui()
 
 
 if __name__ == "__main__":

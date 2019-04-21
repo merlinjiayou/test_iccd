@@ -152,7 +152,7 @@ class runtime_control(QWidget, Ui_runtime_control):
 
     @pyqtSlot()
     def on_spinBox_mcp_gain_editingFinished(self):
-        self.gain_controler.set_current_vot(self.spinBox_mcp_gain.value()*5/4095)
+        self.gain_controler.set_current_vot(self.spinBox_mcp_gain.value()/1000)
 
 
 if __name__ == "__main__":

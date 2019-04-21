@@ -43,9 +43,7 @@ class delayer():
             "trigger divisor":1,
             "trigger level":2
         }
-        print(self.config)
         self.connect_status=self.connect_device()
-        print("delayer connect statu",self.connect_status)
         if self.connect_status:
             self.init_device()
             self.load_status=self.load_config()

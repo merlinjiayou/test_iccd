@@ -44,7 +44,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -2706,12 +2706,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>345</x>
-     <y>118</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>465</x>
-     <y>173</y>
+     <x>352</x>
+     <y>134</y>
     </hint>
    </hints>
   </connection>
@@ -2802,12 +2802,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>345</x>
-     <y>118</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>566</x>
-     <y>173</y>
+     <x>352</x>
+     <y>134</y>
     </hint>
    </hints>
   </connection>
@@ -2850,12 +2850,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>345</x>
-     <y>118</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>566</x>
-     <y>146</y>
+     <x>352</x>
+     <y>134</y>
     </hint>
    </hints>
   </connection>
@@ -2902,7 +2902,7 @@
      <y>13</y>
     </hint>
     <hint type="destinationlabel">
-     <x>434</x>
+     <x>632</x>
      <y>286</y>
     </hint>
    </hints>
@@ -2914,12 +2914,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>345</x>
-     <y>118</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>345</x>
-     <y>226</y>
+     <x>334</x>
+     <y>109</y>
     </hint>
    </hints>
   </connection>
@@ -2978,12 +2978,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>345</x>
-     <y>118</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>465</x>
-     <y>200</y>
+     <x>352</x>
+     <y>134</y>
     </hint>
    </hints>
   </connection>
@@ -3042,12 +3042,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>345</x>
-     <y>118</y>
+     <x>334</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>465</x>
-     <y>146</y>
+     <x>352</x>
+     <y>134</y>
     </hint>
    </hints>
   </connection>

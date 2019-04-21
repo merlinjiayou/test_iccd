@@ -4,6 +4,7 @@ from TIS.Imaging import ICImagingControl as camera
 import ctypes as C
 import time
 import numpy as np
+import os
 class ccd_174():
     """相机拥有5个缓存器，最多设置5个获取线程"""
     #MemoryCurrentGrabberColorformat内存管理图像格式
@@ -314,12 +315,14 @@ class ccd_174():
 
 
 
-
 class ccd_em16():
     """相机拥有5个缓存器，最多设置5个获取线程"""
     #MemoryCurrentGrabberColorformat内存管理图像格式
     def __init__(self):
         self.cam = camera()
+        self.current_count=0
+        self.last_count=0
+        self.last_time=0
         self.connect_status=self.connect_device()
         if self.connect_status:
             self.init_device()
@@ -377,6 +380,7 @@ class ccd_em16():
     def get_data(self):
         self.cam.MemorySnapImage()
         data_mem = self.cam.ImageActiveBuffer
+
         data_mem.Lock()
         data_pointer = int(str(data_mem.GetIntPtr()))
         if self.get_image_bit() == 8:  # 根据相机位数选择读取方式
@@ -664,21 +668,32 @@ class ccd_em16():
             self.cam.set_VideoFormat(image_format)
 
     def Load_Device_State(self):
-        if self.cam.LiveVideoRunning:
-            self.cam.LiveStop()
-            self.cam.LoadDeviceState
-            self.cam.LiveStart()
-        else:
-            self.cam.LoadDeviceState
+        try:
+            file = open(os.path.join(os.getcwd(), "ccd_config.iccf"))
+            text_list = file.readlines(10000)
+            text = ""
+            for i in text_list:
+                text = text + i
+            if self.cam.LiveVideoRunning:
+                self.cam.LiveStop()
+                self.cam.LoadDeviceState(text,True)
+                self.cam.LiveStart()
+            else:
+                self.cam.LoadDeviceState(text,True)
+        except:
+            pass
+
 
 
     def Save_Device_State(self):
         if self.cam.LiveVideoRunning:
             self.cam.LiveStop()
             self.cam.SaveDeviceState()
+            self.cam.SaveDeviceStateToFile(os.path.join(os.getcwd(),"ccd_config.iccf"))
             self.cam.LiveStart()
         else:
             self.cam.SaveDeviceState()
+            self.cam.SaveDeviceStateToFile(os.path.join(os.getcwd(), "ccd_config.iccf"))
 
     def set_y_offset(self, value):
         # max1076  min 0
