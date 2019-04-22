@@ -208,7 +208,6 @@ class graph_widget(QMainWindow, Ui_MainWindow):
         v1.rotate(90, 10, 0, 0)
 
 
-
         self.window_3D.addItem(v1)
         self.set_camera_position(image_count,data.shape[0])
         self.plot_image(data)
