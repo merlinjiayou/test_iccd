@@ -45,6 +45,7 @@ class graph_widget(QMainWindow, Ui_MainWindow):
         self.image_plot.addItem(self.imgitem)
         self.image_vb = self.image_plot.vb
         self.image_vb.setAspectLocked(True)
+        self.image_vb.setLimits(xMin=0,xMax=1920,yMin=0,yMax=1200)
         self.image_mouse_event = pg.SignalProxy(self.image_plot.scene().sigMouseMoved, rateLimit=60, slot=self.view_pixel_value)
 
         #添加纵向合并
@@ -174,7 +175,7 @@ class graph_widget(QMainWindow, Ui_MainWindow):
             pass
 
     def add_3d_example(self):
-        shape = (100, 100, 70)
+        shape = (100, 100, 80)
         data = pg.gaussianFilter(np.random.normal(size=shape), (4, 4, 4))
         data += pg.gaussianFilter(np.random.normal(size=shape), (15, 15, 15)) * 15
         data = data[:, 50]

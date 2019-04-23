@@ -1,5 +1,6 @@
 import clr
-clr.AddReference("ICImagingControl")
+import os
+clr.AddReference(os.path.join(os.getcwd(),"ICImagingControl"))
 from TIS.Imaging import ICImagingControl as camera
 import ctypes as C
 import time
@@ -344,6 +345,9 @@ class ccd_em16():
         self.enable_strobe(True)
         self.set_strobe_mode(2)
         self.strobe_ploarity(True)
+
+    # def break_device(self):
+    #     self.cam.exitControl()
 
 
     def connect_device(self):

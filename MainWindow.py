@@ -14,7 +14,7 @@ from ccd import ccd_em16
 import threading
 from runtime_control import runtime_control
 from aquisition_setup import aquisition_setup
-from graph_widget import graph_widget
+from ic_graph_widget import graph_widget
 import ctypes
 import time
 import numpy as np
@@ -657,7 +657,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         file_path,_=QtWidgets.QFileDialog.getSaveFileName(None,"save config",self.file_path["save"],"file type(*.ini)")
         if file_path:
             self.aquisition_widget.save_config(file_path)
-            # QtWidgets.QMessageBox.information(None, "提示", "加载完成", QtWidgets.QMessageBox.Ok)
+            self.show_message_box_signal.emit("保存完成")
 
 
     @pyqtSlot()
@@ -670,7 +670,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         file_path,_=QtWidgets.QFileDialog.getOpenFileName(None,"加载配置",self.file_path["open"],"file type(*.ini)")
         if file_path:
             self.aquisition_widget.load_config(file_path)
-            # QtWidgets.QMessageBox.information(None, "提示", "加载完成", QtWidgets.QMessageBox.Ok)
+            self.show_message_box_signal.emit("加载完成")
 
     
     @pyqtSlot()

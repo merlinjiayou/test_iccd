@@ -73,7 +73,7 @@ class aquisition_setup(QWidget, Ui_aquisition_setup):
 
 
     def init_ui(self):
-        # try:
+        try:
             self.spinBox_mcp_gain.setValue(self.gain_controler.gain_value)
             self.doubleSpinBox_exposure_time.setValue(self.ccd.get_integration_time())
             self.doubleSpinBox_pre_gain.setValue(self.ccd.get_gain())
@@ -155,9 +155,8 @@ class aquisition_setup(QWidget, Ui_aquisition_setup):
                     self.checkBox_enable_ioc.setChecked(False)
                 else:
                     self.checkBox_enable_ioc.setChecked(True)
-        # except:
-        #     pass
-        #     self.update_message_signal.emit("初始化失败")
+        except:
+            pass
 
 
     
